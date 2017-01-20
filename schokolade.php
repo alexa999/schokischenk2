@@ -1,4 +1,8 @@
 <?php session_start(); ?>
+<?php if( !isset( $_SESSION["warenkorb"] )) {
+  $_SESSION["warenkorb"] = array();
+}
+?>
 <?php require( "datenbank.php" ); ?>
 <?php
 if( isset( $_GET[ "id" ] ) && !empty( $_GET[ "id" ] ) ) {
@@ -10,9 +14,10 @@ if( isset( $_POST[ "Anzahl" ] ) && !empty( $_POST[ "Anzahl" ] )  ) {
   $idDesProduktes = $_POST[ "schokoID" ];
   $warenkorbArray = array( 'anzahl' => $gewuenschteAnzahl, 'id' => $idDesProduktes );
   array_push( $_SESSION["warenkorb"], $warenkorbArray );
-  var_dump( $_SESSION["warenkorb"] );
-  die;
-
+  $successfull = 'Warenkorb wurde aktualisiert';
+}
+else {
+  $successfull = '';
 }
 ?>
 <!DOCTYPE html>
@@ -57,7 +62,7 @@ if( isset( $_POST[ "Anzahl" ] ) && !empty( $_POST[ "Anzahl" ] )  ) {
                   <div>schkoloadegrössen</div>
                   <div class="w-icon-dropdown-toggle"></div>
                 </div>
-                <nav class="dropdownlist w-dropdown-list"><a class="dropdownmenulink w-dropdown-link" href="schokoladengroen.html">klein</a><a class="dropdownmenulink w-dropdown-link" href="schokoladengroen.html">mittel</a><a class="dropdownmenulink w-dropdown-link" href="schokoladengroen.html">gross</a>
+                <nav class="dropdownlist w-dropdown-list"><a class="dropdownmenulink w-dropdown-link" href="schokoladengroen.php">klein</a><a class="dropdownmenulink w-dropdown-link" href="schokoladengroen.php">mittel</a><a class="dropdownmenulink w-dropdown-link" href="schokoladengroen.php">gross</a>
                 </nav>
               </div>
               <div class="w-dropdown" data-delay="0" data-hover="1">
@@ -65,10 +70,10 @@ if( isset( $_POST[ "Anzahl" ] ) && !empty( $_POST[ "Anzahl" ] )  ) {
                   <div>Schokoladearten</div>
                   <div class="w-icon-dropdown-toggle"></div>
                 </div>
-                <nav class="dropdownlist w-dropdown-list"><a class="dropdownmenulink w-dropdown-link" href="schokoladenarten.html">zartbitter</a><a class="dropdownmenulink w-dropdown-link" href="schokoladenarten.html">vollmilch</a><a class="dropdownmenulink w-dropdown-link" href="schokoladenarten.html">nougat</a>
+                <nav class="dropdownlist w-dropdown-list"><a class="dropdownmenulink w-dropdown-link" href="schokoladenarten.php">zartbitter</a><a class="dropdownmenulink w-dropdown-link" href="schokoladenarten.php">vollmilch</a><a class="dropdownmenulink w-dropdown-link" href="schokoladenarten.php">nougat</a>
                 </nav>
               </div>
-              <a class="menuitem w-nav-link warenkorb" href="warenkorb.html"></a>
+              <a class="menuitem w-nav-link warenkorb" href="warenkorb.php"></a>
             </nav>
             <div class="menubutton w-nav-button">
               <div class="menuicon w-icon-nav-menu"></div>
@@ -139,11 +144,14 @@ if( isset( $_POST[ "Anzahl" ] ) && !empty( $_POST[ "Anzahl" ] )  ) {
             <div class="shippingtag">zzgl. Versand und Bezahlkosten</div>
           </div>
           <div class="w-form">
-            <form action="#" class="formspecific" data-name="Email Form" data-redirect="#" id="email-form" method="post" name="email-form" redirect="#">
+            <form action="schokolade.php<?php echo "?id=" . $spezifischeSchokolade[0]; ?>" class="formspecific" data-name="Email Form" data-redirect="#" id="email-form" method="post" name="email-form" redirect="#">
               <input class="textfieldcheckout w-input" data-name="Anzahl" id="Anzahl" maxlength="256" name="Anzahl" placeholder="Anzahl" required="required" type="text">
               <input type="hidden" id="schokoID" name="schokoID" value="<?php echo $spezifischeSchokolade[0]; ?>"> 
               <input class="w-button warenkorblegen" data-wait="Beispielsweise in dne Warenkorb gelegt" type="submit" value="in den Warenkorb">
             </form>
+            <?php
+            echo '<p style="text-align:center;">' . $successfull . '</p>';
+            ?>
             <div class="w-form-done">
               <div>Thank you! Your submission has been received!</div>
             </div>

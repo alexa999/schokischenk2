@@ -40,7 +40,7 @@
                     <div>schkoloadegrössen</div>
                     <div class="w-icon-dropdown-toggle"></div>
                   </div>
-                  <nav class="dropdownlist w-dropdown-list"><a class="dropdownmenulink w-dropdown-link" href="schokoladengroen.html">klein</a><a class="dropdownmenulink w-dropdown-link" href="schokoladengroen.html">mittel</a><a class="dropdownmenulink w-dropdown-link" href="schokoladengroen.html">gross</a>
+                  <nav class="dropdownlist w-dropdown-list"><a class="dropdownmenulink w-dropdown-link" href="schokoladengroen.php">klein</a><a class="dropdownmenulink w-dropdown-link" href="schokoladengroen.php">mittel</a><a class="dropdownmenulink w-dropdown-link" href="schokoladengroen.php">gross</a>
                   </nav>
                 </div>
                 <div class="w-dropdown" data-delay="0" data-hover="1">
@@ -48,10 +48,10 @@
                     <div>Schokoladearten</div>
                     <div class="w-icon-dropdown-toggle"></div>
                   </div>
-                  <nav class="dropdownlist w-dropdown-list"><a class="dropdownmenulink w-dropdown-link" href="schokoladenarten.html">zartbitter</a><a class="dropdownmenulink w-dropdown-link" href="schokoladenarten.html">vollmilch</a><a class="dropdownmenulink w-dropdown-link" href="schokoladenarten.html">nougat</a>
+                  <nav class="dropdownlist w-dropdown-list"><a class="dropdownmenulink w-dropdown-link" href="schokoladenarten.php">zartbitter</a><a class="dropdownmenulink w-dropdown-link" href="schokoladenarten.php">vollmilch</a><a class="dropdownmenulink w-dropdown-link" href="schokoladenarten.php">nougat</a>
                   </nav>
                 </div>
-                <a class="menuitem w-nav-link warenkorb" href="warenkorb.html"></a>
+                <a class="menuitem w-nav-link warenkorb" href="warenkorb.php"></a>
               </nav>
               <div class="menubutton w-nav-button">
                 <div class="menuicon w-icon-nav-menu"></div>
@@ -84,7 +84,7 @@
     </div>
   </div>
   <div class="text-container" data-ix="header-load">
-    <h2 class="ueberschrift2">Wir liefern die<br> beste</h2><?php echo " Heutige"; ?>
+    <h2 class="ueberschrift2">Wir liefern die<br> beste</h2>
     <h1 class="handpackedchocolate">handverpackte <br>schokolade</h1>
     <h3>aus dem ganzen universum</h3>
     <div class="scrolling">

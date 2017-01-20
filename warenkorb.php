@@ -1,3 +1,7 @@
+<?php require( "datenbank.php" );
+session_start();
+?>
+
 <!DOCTYPE html>
 <!--  This site was created in Webflow. http://www.webflow.com -->
 <!--  Last Published: Wed Jan 11 2017 23:34:30 GMT+0000 (UTC)  -->
@@ -33,14 +37,14 @@
       <div class="column1 w-col w-col-10 w-col-small-small-stack">
         <div class="navbar w-nav" data-animation="default" data-collapse="medium" data-duration="400">
           <div class="w-container">
-            <a class="logo w-nav-brand" href="index.html"></a>
-            <nav class="navmenumobile w-nav-menu" role="navigation"><a class="menuitem w-nav-link" href="index.html">Startseite</a>
+            <a class="logo w-nav-brand" href="index.php"></a>
+            <nav class="navmenumobile w-nav-menu" role="navigation"><a class="menuitem w-nav-link" href="index.php">Startseite</a>
               <div class="w-dropdown" data-delay="0" data-hover="1">
                 <div class="menuitem w-dropdown-toggle">
                   <div>schkoloadegrössen</div>
                   <div class="w-icon-dropdown-toggle"></div>
                 </div>
-                <nav class="dropdownlist w-dropdown-list"><a class="dropdownmenulink w-dropdown-link" href="schokoladengroen.html">klein</a><a class="dropdownmenulink w-dropdown-link" href="schokoladengroen.html">mittel</a><a class="dropdownmenulink w-dropdown-link" href="schokoladengroen.html">gross</a>
+                <nav class="dropdownlist w-dropdown-list"><a class="dropdownmenulink w-dropdown-link" href="schokoladengroen.php">klein</a><a class="dropdownmenulink w-dropdown-link" href="schokoladengroen.php">mittel</a><a class="dropdownmenulink w-dropdown-link" href="schokoladengroen.php">gross</a>
                 </nav>
               </div>
               <div class="w-dropdown" data-delay="0" data-hover="1">
@@ -48,10 +52,10 @@
                   <div>Schokoladearten</div>
                   <div class="w-icon-dropdown-toggle"></div>
                 </div>
-                <nav class="dropdownlist w-dropdown-list"><a class="dropdownmenulink w-dropdown-link" href="schokoladenarten.html">zartbitter</a><a class="dropdownmenulink w-dropdown-link" href="schokoladenarten.html">vollmilch</a><a class="dropdownmenulink w-dropdown-link" href="schokoladenarten.html">nougat</a>
+                <nav class="dropdownlist w-dropdown-list"><a class="dropdownmenulink w-dropdown-link" href="schokoladenarten.php">zartbitter</a><a class="dropdownmenulink w-dropdown-link" href="schokoladenarten.php">vollmilch</a><a class="dropdownmenulink w-dropdown-link" href="schokoladenarten.php">nougat</a>
                 </nav>
               </div>
-              <a class="menuitem w-nav-link warenkorb" href="warenkorb.html"></a>
+              <a class="menuitem w-nav-link warenkorb" href="warenkorb.php"></a>
             </nav>
             <div class="menubutton w-nav-button">
               <div class="menuicon w-icon-nav-menu"></div>
@@ -75,56 +79,53 @@
       <h5 class="secondsectionheading5">Lieber jetzt kaufen</h5>
     </div>
   </div>
+
   <div class="warenkorbsection">
     <div class="w-container">
-      <div class="w-row warenkorbrow">
-        <div class="w-col w-col-4"><img class="warenkorbpic" sizes="(max-width: 767px) 54vw, (max-width: 991px) 128.421875px, 167.984375px" src="images/warenkorbBild.png" srcset="images/warenkorbBild.png 500w, images/warenkorbBild.png 600w">
-        </div>
-        <div class="w-col w-col-5">
-          <h4 class="nameofproduct">Supergeile Schokolade frisch gemacht aus kuhscheisse</h4>
-          <div class="chocolatesize chocolatesizespecific">Art: Walnuss</div>
-          <div class="chocolatesize">Grösse: Gross</div>
-        </div>
-        <div class="w-col w-col-2">
-          <h4 class="menge">4<br>x</h4>
-          <h4 class="pricetag pricetagwarenkorb">50€</h4>
-        </div>
-        <div class="w-col w-col-1"><a class="w-button warenkorbentfernen" href="#">entfernen</a>
-        </div>
-      </div>
-      <div class="w-row warenkorbrow">
-        <div class="w-col w-col-4"><img class="warenkorbpic" sizes="(max-width: 767px) 54vw, (max-width: 991px) 128.421875px, 167.984375px" src="images/warenkorbBild.png" srcset="images/warenkorbBild.png 500w, images/warenkorbBild.png 600w">
-        </div>
-        <div class="w-col w-col-5">
-          <h4 class="nameofproduct">Supergeile Schokolade frisch gemacht aus kuhscheisse</h4>
-          <div class="chocolatesize chocolatesizespecific chocolatewarenkorb">Art: Walnuss</div>
-          <div class="chocolatesize">Grösse: Gross</div>
-        </div>
-        <div class="w-col w-col-2">
-          <h4 class="menge">4<br>x</h4>
-          <h4 class="pricetag pricetagwarenkorb">50€</h4>
-        </div>
-        <div class="w-col w-col-1"><a class="w-button warenkorbentfernen" href="#">entfernen</a>
-        </div>
-      </div>
-      <div class="lastrow w-row warenkorbrow">
-        <div class="w-col w-col-4"><img class="warenkorbpic" sizes="(max-width: 767px) 54vw, (max-width: 991px) 128.421875px, 167.984375px" src="images/warenkorbBild.png" srcset="images/warenkorbBild.png 500w, images/warenkorbBild.png 600w">
-        </div>
-        <div class="w-col w-col-5">
-          <h4 class="nameofproduct">Supergeile Schokolade frisch gemacht aus kuhscheisse</h4>
-          <div class="chocolatesize chocolatesizespecific">Art: Walnuss</div>
-          <div class="chocolatesize">Grösse: Gross</div>
-        </div>
-        <div class="w-col w-col-2">
-          <h4 class="menge">4<br>x</h4>
-          <h4 class="pricetag pricetagwarenkorb">50€</h4>
-        </div>
-        <div class="w-col w-col-1"><a class="w-button warenkorbentfernen" href="#">entfernen</a>
-        </div>
-      </div>
+
+    <?php if( isset( $_SESSION["warenkorb"]) && !empty( $_SESSION["warenkorb"] ) ) {
+      $priceTotal = 0;
+      $anzahlArray = count( $_SESSION["warenkorb"] );
+      $counter = 0;
+      foreach( $_SESSION["warenkorb"] as $einzelnesItem ) {
+        $schokoID = $einzelnesItem["id"];
+        $anzahl = $einzelnesItem["anzahl"];
+        $sql = "SELECT * FROM Gut WHERE produktID=" . $schokoID;
+        $result = $conn->query( $sql );
+        $schokolade = $result->fetch_row();
+        if( $counter >= $anzahlArray ) {
+          $lastrow = 'lastrow ';
+        }
+        else {
+          $lastrow = '';
+        }
+
+        echo '<div class="' . $lastrow . 'w-row warenkorbrow">';
+        echo '<div class="w-col w-col-4"><img class="warenkorbpic" sizes="(max-width: 767px) 54vw, (max-width: 991px) 128.421875px, 167.984375px" src="images/' . $schokolade[0] . '.jpg" srcset="images/' . $schokolade[0] . '.jpg 500w, images/' . $schokolade[0] . '.jpg 600w">
+        </div>';
+        echo '<div class="w-col w-col-5">';
+        echo '<h4 class="nameofproduct">' . $schokolade[3] . '</h4>';
+        echo '<div class="chocolatesize chocolatesizespecific">Art: ' . $schokoade[1] . '</div>';
+        echo '<div class="chocolatesize">Grösse: ' . $schokolade[2] . '</div>';
+        echo '</div>';
+        echo '<div class="w-col w-col-2">';
+        echo '<h4 class="menge">' . $anzahl . '<br>x</h4>';
+        echo '<h4 class="pricetag pricetagwarenkorb">' . $schokolade[4] . '€</h4>';
+        echo '</div>';
+        echo '<div class="w-col w-col-1"><a class="w-button warenkorbentfernen" href="#">entfernen</a>';
+        echo '</div>';
+        echo '</div>';
+        $counter++;
+       
+        $priceTotal += $anzahl * $schokolade[4];      
+      }
+    }
+
+  ?>
+
     </div>
     <div class="w-container">
-      <h1>Gesamt: 600€</h1><a class="tokasse w-button" href="#">Zur Kasse</a>
+      <h1>Gesamt: <?php echo $priceTotal; ?>€</h1><a class="tokasse w-button" href="#">Zur Kasse</a>
     </div>
   </div>
   <div class="section-footer warenkorbfooter">
