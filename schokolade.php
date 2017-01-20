@@ -1,3 +1,20 @@
+<?php session_start(); ?>
+<?php require( "datenbank.php" ); ?>
+<?php
+if( isset( $_GET[ "id" ] ) && !empty( $_GET[ "id" ] ) ) {
+  $schokoID = $_GET[ "id" ];
+}
+
+if( isset( $_POST[ "Anzahl" ] ) && !empty( $_POST[ "Anzahl" ] )  ) {
+  $gewuenschteAnzahl = $_POST[ "Anzahl" ];
+  $idDesProduktes = $_POST[ "schokoID" ];
+  $warenkorbArray = array( 'anzahl' => $gewuenschteAnzahl, 'id' => $idDesProduktes );
+  array_push( $_SESSION["warenkorb"], $warenkorbArray );
+  var_dump( $_SESSION["warenkorb"] );
+  die;
+
+}
+?>
 <!DOCTYPE html>
 <!--  This site was created in Webflow. http://www.webflow.com -->
 <!--  Last Published: Wed Jan 11 2017 23:34:30 GMT+0000 (UTC)  -->
@@ -33,8 +50,8 @@
       <div class="column1 w-col w-col-10 w-col-small-small-stack">
         <div class="navbar w-nav" data-animation="default" data-collapse="medium" data-duration="400">
           <div class="w-container">
-            <a class="logo w-nav-brand" href="index.html"></a>
-            <nav class="navmenumobile w-nav-menu" role="navigation"><a class="menuitem w-nav-link" href="index.html">Startseite</a>
+            <a class="logo w-nav-brand" href="index.php"></a>
+            <nav class="navmenumobile w-nav-menu" role="navigation"><a class="menuitem w-nav-link" href="index.php">Startseite</a>
               <div class="w-dropdown" data-delay="0" data-hover="1">
                 <div class="menuitem w-dropdown-toggle">
                   <div>schkoloadegrössen</div>
@@ -69,12 +86,31 @@
       </div>
     </div>
   </div>
+
+  <?php
+  $sql = "SELECT * FROM Gut WHERE produktID = " . $schokoID;
+
+  $result = $conn->query( $sql );
+  if( $result->num_rows <= 0 ) {
+    echo '<h1 style="margin-top:25%">Ich habe das Produkt nicht gefunden</h2>';
+  die;
+  }
+  else {
+    $spezifischeSchokolade = $result->fetch_row();
+
+   
+  }
+
+  ?>
   <div class="sectionchocolatesize sectionspecificchocolate">
     <div class="w-container">
-      <h1 class="headingangebot">Unsere SUPERGEILE SCHOKOLADE FRISCH GEMACHT AUS KUHSCHEISSE</h1>
+      <h1 class="headingangebot"><?php echo $spezifischeSchokolade[3]; ?></h1>
       <h5 class="secondsectionheading5">Solange der Vorracht reicht.</h5>
       <div class="specificchocolaterow w-row">
-        <div class="specificchocolateleftcolumn w-col w-col-6"><img sizes="(max-width: 479px) 96vw, (max-width: 618px) 97vw, (max-width: 767px) 600px, (max-width: 991px) 354px, 460px" src="images/bspbildspzfschschoki.png" srcset="images/bspbildspzfschschoki.png 500w, images/bspbildspzfschschoki.png 600w">
+        <div class="specificchocolateleftcolumn w-col w-col-6">
+        <img sizes="(max-width: 479px) 96vw, (max-width: 618px) 97vw, (max-width: 767px) 600px, (max-width: 991px) 354px, 460px" src="images/<?php echo $spezifischeSchokolade[0] . '.jpg'; ?>" srcset="images/<?php echo $spezifischeSchokolade[0] . '.jpg'; ?>" 500w, images/<?php echo $spezifischeSchokolade[0] . '.jpg'; ?>" 600w">
+        <?php if( $spezifischeSchokolade[8] <= 0 ) { ?>      
+
           <div class="w-row">
             <div class="w-col w-col-3 w-col-small-6 w-col-tiny-6">
               <div class="verfgbarkeit"></div>
@@ -83,26 +119,30 @@
               <div class="hellp">zur Zeit nicht Verfügbar, bitte kommen Sie später vorbei</div>
             </div>
           </div>
+          <?php }else { ?>
+
           <div class="w-row">
             <div class="w-col w-col-3 w-col-small-6 w-col-tiny-6">
               <div class="ja verfgbarkeit"></div>
             </div>
             <div class="w-col w-col-9 w-col-small-6 w-col-tiny-6">
-              <div class="hellp">xxx Stück verfügbar</div>
+              <div class="hellp"><?php echo $spezifischeSchokolade[8]; ?> Stück verfügbar</div>
             </div>
           </div>
+          <?php } ?>
         </div>
         <div class="specificchocolaterightcolumn w-col w-col-6">
           <div class="productinformation">
-            <div class="chocolatesize chocolatesizespecific">Art: Walnuss</div>
-            <div class="chocolatesize">Grösse: Gross</div>
-            <h4 class="pricetag pricetagspecific">50€<br><em>inkl.Mwst.</em></h4>
+            <div class="chocolatesize chocolatesizespecific">Art: <?php echo $spezifischeSchokolade[1]; ?></div>
+            <div class="chocolatesize">Grösse: <?php echo $spezifischeSchokolade[2]; ?></div>
+            <h4 class="pricetag pricetagspecific"><?php echo $spezifischeSchokolade[4]; ?>€<br><em>inkl.Mwst.</em></h4>
             <div class="shippingtag">zzgl. Versand und Bezahlkosten</div>
           </div>
           <div class="w-form">
             <form action="#" class="formspecific" data-name="Email Form" data-redirect="#" id="email-form" method="post" name="email-form" redirect="#">
               <input class="textfieldcheckout w-input" data-name="Anzahl" id="Anzahl" maxlength="256" name="Anzahl" placeholder="Anzahl" required="required" type="text">
-              <input class="w-button warenkorblegen" data-wait="Beispielsweise in dne Warenkorb gelegt" type="submit" value="Warenkorb - NICHT KLICKEN">
+              <input type="hidden" id="schokoID" name="schokoID" value="<?php echo $spezifischeSchokolade[0]; ?>"> 
+              <input class="w-button warenkorblegen" data-wait="Beispielsweise in dne Warenkorb gelegt" type="submit" value="in den Warenkorb">
             </form>
             <div class="w-form-done">
               <div>Thank you! Your submission has been received!</div>

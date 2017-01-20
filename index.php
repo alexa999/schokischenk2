@@ -33,8 +33,8 @@
         <div class="column1 w-col w-col-10 w-col-small-small-stack">
           <div class="navbar w-nav" data-animation="default" data-collapse="medium" data-duration="400">
             <div class="w-container">
-              <a class="logo w-nav-brand" href="index.html"></a>
-              <nav class="navmenumobile w-nav-menu" role="navigation"><a class="menuitem w-nav-link" href="index.html">Startseite</a>
+              <a class="logo w-nav-brand" href="index.php"></a>
+              <nav class="navmenumobile w-nav-menu" role="navigation"><a class="menuitem w-nav-link" href="index.php">Startseite</a>
                 <div class="w-dropdown" data-delay="0" data-hover="1">
                   <div class="menuitem w-dropdown-toggle">
                     <div>schkoloadegrössen</div>
@@ -98,76 +98,54 @@
       <h1>6 Angebote zum <br><br>verlieben</h1>
       <h5 class="secondsectionheading5">Solange der Vorracht reicht.</h5>
 
-      <div class="angeboterow w-row">
-        <div class="columninsiderow w-col w-col-4">
-          <div class="imagediv"><img src="images/test.png">
-            <h4 class="nameofproduct">Supergeile Schokolade frisch gemacht aus kuhscheisse</h4>
-            <div class="productinformation">
-              <div class="chocolatesize">Art: Walnuss</div>
-              <div class="chocolatesize">Grösse: Gross</div>
-              <h4 class="pricetag">50€<br><em>inkl.Mwst.</em></h4>
-              <div class="shippingtag">zzgl. Versand und Bezahlkosten</div><a class="verfgbarkeitbtn w-button" href="schokolade.html">Jetzt Verfügbarkeit prüfen</a>
-            </div>
-          </div>
-        </div>
-        <div class="columninsiderow w-col w-col-4">
-          <div class="imagediv"><img src="images/test.png">
-            <h4 class="nameofproduct">Supergeile Schokolade frisch gemacht aus kuhscheisse</h4>
-            <div class="productinformation">
-              <div class="chocolatesize">Art: Walnuss</div>
-              <div class="chocolatesize">Grösse: Gross</div>
-              <h4 class="pricetag">50€<br><em>inkl.Mwst.</em></h4>
-              <div class="shippingtag">zzgl. Versand und Bezahlkosten</div><a class="verfgbarkeitbtn w-button" href="schokolade.html">Jetzt Verfügbarkeit prüfen</a>
-            </div>
-          </div>
-        </div>
-        <div class="columninsiderow w-col w-col-4">
-          <div class="imagediv"><img src="images/test.png">
-            <h4 class="nameofproduct">Supergeile Schokolade frisch gemacht aus kuhscheisse</h4>
-            <div class="productinformation">
-              <div class="chocolatesize">Art: Walnuss</div>
-              <div class="chocolatesize">Grösse: Gross</div>
-              <h4 class="pricetag">50€<br><em>inkl.Mwst.</em></h4>
-              <div class="shippingtag">zzgl. Versand und Bezahlkosten</div><a class="verfgbarkeitbtn w-button" href="schokolade.html">Jetzt Verfügbarkeit prüfen</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="angeboterow secondrow w-row">
-        <div class="columninsiderow w-col w-col-4">
-          <div class="imagediv"><img src="images/test.png">
-            <h4 class="nameofproduct">Supergeile Schokolade frisch gemacht aus kuhscheisse</h4>
-            <div class="productinformation">
-              <div class="chocolatesize">Art: Walnuss</div>
-              <div class="chocolatesize">Grösse: Gross</div>
-              <h4 class="pricetag">50€<br><em>inkl.Mwst.</em></h4>
-              <div class="shippingtag">zzgl. Versand und Bezahlkosten</div><a class="verfgbarkeitbtn w-button" href="#">Jetzt Verfügbarkeit prüfen</a>
-            </div>
-          </div>
-        </div>
-        <div class="columninsiderow w-col w-col-4">
-          <div class="imagediv"><img src="images/test.png">
-            <h4 class="nameofproduct">Supergeile Schokolade frisch gemacht aus kuhscheisse</h4>
-            <div class="productinformation">
-              <div class="chocolatesize">Art: Walnuss</div>
-              <div class="chocolatesize">Grösse: Gross</div>
-              <h4 class="pricetag">50€<br><em>inkl.Mwst.</em></h4>
-              <div class="shippingtag">zzgl. Versand und Bezahlkosten</div><a class="verfgbarkeitbtn w-button" href="#">Jetzt Verfügbarkeit prüfen</a>
-            </div>
-          </div>
-        </div>
-        <div class="columninsiderow w-col w-col-4">
-          <div class="imagediv"><img src="images/test.png">
-            <h4 class="nameofproduct">Supergeile Schokolade frisch gemacht aus kuhscheisse</h4>
-            <div class="productinformation">
-              <div class="chocolatesize">Art: Walnuss</div>
-              <div class="chocolatesize">Grösse: Gross</div>
-              <h4 class="pricetag">50€<br><em>inkl.Mwst.</em></h4>
-              <div class="shippingtag">zzgl. Versand und Bezahlkosten</div><a class="verfgbarkeitbtn w-button" href="schokolade.html">Jetzt Verfügbarkeit prüfen</a>
-            </div>
-          </div>
-        </div>
-      </div>
+<?php
+
+$sql = "SELECT * FROM Gut";
+$result = $conn->query( $sql );
+
+if( $result->num_rows <= 0 ) {
+  echo "Ich habe keine Produkte gefunden";
+}
+else {
+  $alleSchokoladen = $result->fetch_all();
+  shuffle( $alleSchokoladen );
+  $counter = 0;
+  $counterMax = 6;
+  foreach( $alleSchokoladen as $singleSchokolade ) {
+    if( $counter >= $counterMax ) {
+      break;
+    }
+
+    if( $counter % 3 == 0 ) {
+      if( $counter >= 3 ) {
+        $secondrow = 'secondrow ';
+      }
+      else {
+        $secondrow = '';
+      }
+      echo '<div class="angeboterow ' .$secondrow . 'w-row">';
+    }
+    echo '<div class="columninsiderow w-col w-col-4">';
+    echo '<div class="imagediv"><img src="images/' . $singleSchokolade[0] . '.jpg">';
+    echo '<h4 class="nameofproduct">' . $singleSchokolade[3] . '</h4>';
+    echo '<div class="productinformation">';
+    echo '<div class="chocolatesize">Art: ' . $singleSchokolade[1] . '</div>';
+    echo '<div class="chocolatesize">Grösse: ' . $singleSchokolade[2] . '</div>';
+    echo '<h4 class="pricetag">' . $singleSchokolade[4] . '€<br><em>inkl.Mwst.</em></h4>';
+    echo '<div class="shippingtag">zzgl. Versand und Bezahlkosten</div><a class="verfgbarkeitbtn w-button" href="schokolade.php?id=' . $singleSchokolade[0] . '">Jetzt Verfügbarkeit prüfen</a>';
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
+
+    if( $counter %3 == 2 ) {
+      echo '</div>';
+    }
+    $counter++;
+  }
+}
+
+
+?>
     </div>
   </div>
   <div class="section-footer warenkorbfooter">
