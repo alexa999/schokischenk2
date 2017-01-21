@@ -33,14 +33,14 @@
       <div class="column1 w-col w-col-10 w-col-small-small-stack">
         <div class="navbar w-nav" data-animation="default" data-collapse="medium" data-duration="400">
           <div class="w-container">
-            <a class="logo w-nav-brand" href="index.html"></a>
-            <nav class="navmenumobile w-nav-menu" role="navigation"><a class="menuitem w-nav-link" href="index.html">Startseite</a>
+            <a class="logo w-nav-brand" href="index.php"></a>
+            <nav class="navmenumobile w-nav-menu" role="navigation"><a class="menuitem w-nav-link" href="index.php">Startseite</a>
               <div class="w-dropdown" data-delay="0" data-hover="1">
                 <div class="menuitem w-dropdown-toggle">
                   <div>schkoloadegrössen</div>
                   <div class="w-icon-dropdown-toggle"></div>
                 </div>
-                <nav class="dropdownlist w-dropdown-list"><a class="dropdownmenulink w-dropdown-link" href="schokoladengroen.html">klein</a><a class="dropdownmenulink w-dropdown-link" href="schokoladengroen.html">mittel</a><a class="dropdownmenulink w-dropdown-link" href="schokoladengroen.html">gross</a>
+                <nav class="dropdownlist w-dropdown-list"><a class="dropdownmenulink w-dropdown-link" href="schokoladengroen.php">klein</a><a class="dropdownmenulink w-dropdown-link" href="schokoladengroen.php">mittel</a><a class="dropdownmenulink w-dropdown-link" href="schokoladengroen.php">gross</a>
                 </nav>
               </div>
               <div class="w-dropdown" data-delay="0" data-hover="1">
@@ -48,10 +48,10 @@
                   <div>Schokoladearten</div>
                   <div class="w-icon-dropdown-toggle"></div>
                 </div>
-                <nav class="dropdownlist w-dropdown-list"><a class="dropdownmenulink w-dropdown-link" href="schokoladenarten.html">zartbitter</a><a class="dropdownmenulink w-dropdown-link" href="schokoladenarten.html">vollmilch</a><a class="dropdownmenulink w-dropdown-link" href="schokoladenarten.html">nougat</a>
+                <nav class="dropdownlist w-dropdown-list"><a class="dropdownmenulink w-dropdown-link" href="schokoladenarten.php">zartbitter</a><a class="dropdownmenulink w-dropdown-link" href="schokoladenarten.php">vollmilch</a><a class="dropdownmenulink w-dropdown-link" href="schokoladenarten.php">nougat</a>
                 </nav>
               </div>
-              <a class="menuitem w-nav-link warenkorb" href="warenkorb.html"></a>
+              <a class="menuitem w-nav-link warenkorb" href="warenkorb.php"></a>
             </nav>
             <div class="menubutton w-nav-button">
               <div class="menuicon w-icon-nav-menu"></div>
@@ -81,7 +81,7 @@
               <div class="chocolatesize">Art: Walnuss</div>
               <div class="chocolatesize">Grösse: Gross</div>
               <h4 class="pricetag">50€<br><em>inkl.Mwst.</em></h4>
-              <div class="shippingtag">zzgl. Versand und Bezahlkosten</div><a class="verfgbarkeitbtn w-button" href="schokolade.html">Jetzt Verfügbarkeit prüfen</a>
+              <div class="shippingtag">zzgl. Versand und Bezahlkosten</div><a class="verfgbarkeitbtn w-button" href="schokolade.php">Jetzt Verfügbarkeit prüfen</a>
             </div>
           </div>
         </div>
@@ -92,7 +92,7 @@
               <div class="chocolatesize">Art: Walnuss</div>
               <div class="chocolatesize">Grösse: Gross</div>
               <h4 class="pricetag">50€<br><em>inkl.Mwst.</em></h4>
-              <div class="shippingtag">zzgl. Versand und Bezahlkosten</div><a class="verfgbarkeitbtn w-button" href="schokolade.html">Jetzt Verfügbarkeit prüfen</a>
+              <div class="shippingtag">zzgl. Versand und Bezahlkosten</div><a class="verfgbarkeitbtn w-button" href="schokolade.php">Jetzt Verfügbarkeit prüfen</a>
             </div>
           </div>
         </div>
@@ -103,7 +103,7 @@
               <div class="chocolatesize">Art: Walnuss</div>
               <div class="chocolatesize">Grösse: Gross</div>
               <h4 class="pricetag">50€<br><em>inkl.Mwst.</em></h4>
-              <div class="shippingtag">zzgl. Versand und Bezahlkosten</div><a class="verfgbarkeitbtn w-button" href="schokolade.html">Jetzt Verfügbarkeit prüfen</a>
+              <div class="shippingtag">zzgl. Versand und Bezahlkosten</div><a class="verfgbarkeitbtn w-button" href="schokolade.php">Jetzt Verfügbarkeit prüfen</a>
             </div>
           </div>
         </div>
@@ -116,7 +116,7 @@
               <div class="chocolatesize">Art: Walnuss</div>
               <div class="chocolatesize">Grösse: Gross</div>
               <h4 class="pricetag">50€<br><em>inkl.Mwst.</em></h4>
-              <div class="shippingtag">zzgl. Versand und Bezahlkosten</div><a class="verfgbarkeitbtn w-button" href="schokolade.html">Jetzt Verfügbarkeit prüfen</a>
+              <div class="shippingtag">zzgl. Versand und Bezahlkosten</div><a class="verfgbarkeitbtn w-button" href="schokolade.php">Jetzt Verfügbarkeit prüfen</a>
             </div>
           </div>
         </div>
@@ -127,7 +127,7 @@
               <div class="chocolatesize">Art: Walnuss</div>
               <div class="chocolatesize">Grösse: Gross</div>
               <h4 class="pricetag">50€<br><em>inkl.Mwst.</em></h4>
-              <div class="shippingtag">zzgl. Versand und Bezahlkosten</div><a class="verfgbarkeitbtn w-button" href="schokolade.html">Jetzt Verfügbarkeit prüfen</a>
+              <div class="shippingtag">zzgl. Versand und Bezahlkosten</div><a class="verfgbarkeitbtn w-button" href="schokolade.php">Jetzt Verfügbarkeit prüfen</a>
             </div>
           </div>
         </div>
@@ -138,7 +138,7 @@
               <div class="chocolatesize">Art: Walnuss</div>
               <div class="chocolatesize">Grösse: Gross</div>
               <h4 class="pricetag">50€<br><em>inkl.Mwst.</em></h4>
-              <div class="shippingtag">zzgl. Versand und Bezahlkosten</div><a class="verfgbarkeitbtn w-button" href="schokolade.html">Jetzt Verfügbarkeit prüfen</a>
+              <div class="shippingtag">zzgl. Versand und Bezahlkosten</div><a class="verfgbarkeitbtn w-button" href="schokolade.php">Jetzt Verfügbarkeit prüfen</a>
             </div>
           </div>
         </div>

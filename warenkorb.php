@@ -1,5 +1,23 @@
 <?php require( "datenbank.php" );
 session_start();
+$aktualisiert = '';
+if( isset( $_POST ) && !empty( $_POST ) ) {
+   $formularSchokoID = $_POST["schokoID"];
+   $formularAnzahl = $_POST["anzahl"];
+
+  if( isset( $_SESSION["warenkorb"] ) && !empty( $_SESSION["warenkorb"] ) ) {
+    foreach( $_SESSION["warenkorb"] as $einzelnesItem => $value ) {
+      $warenkorbAnzahl = $value["anzahl"];
+      $warenkorbSchokoID = $value["id"];
+      if( $formularSchokoID == $warenkorbSchokoID ) {
+        if( $formularAnzahl == $warenkorbAnzahl ) {
+          unset( $_SESSION["warenkorb"][$einzelnesItem] );
+          $aktualisiert = "Warenkorb wurde aktualisiert";
+        }
+      }
+    }
+  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -77,6 +95,7 @@ session_start();
     <div class="w-container">
       <h1 class="headingangebot">Warenkorb</h1>
       <h5 class="secondsectionheading5">Lieber jetzt kaufen</h5>
+      <p style="text-align:center;"><?php echo $aktualisiert; ?></p>
     </div>
   </div>
 
@@ -112,7 +131,12 @@ session_start();
         echo '<h4 class="menge">' . $anzahl . '<br>x</h4>';
         echo '<h4 class="pricetag pricetagwarenkorb">' . $schokolade[4] . '€</h4>';
         echo '</div>';
-        echo '<div class="w-col w-col-1"><a class="w-button warenkorbentfernen" href="#">entfernen</a>';
+        echo '<div class="w-col w-col-1">
+        <form action="warenkorb.php" method="POST" id="deleteitem">
+        <input type="hidden" name="schokoID" value="' . $schokolade[0] .'">
+        <input type="hidden" name="anzahl" value="' . $anzahl . '">
+        <button type="submit" class="w-button warenkorbentfernen" href="#">entfernen</button>
+        </form>';
         echo '</div>';
         echo '</div>';
         $counter++;
