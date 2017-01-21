@@ -149,7 +149,7 @@ if( isset( $_POST ) && !empty( $_POST ) ) {
 
     </div>
     <div class="w-container">
-      <h1>Gesamt: <?php echo $priceTotal; ?>€</h1><a class="tokasse w-button" href="#">Zur Kasse</a>
+      <h1>Gesamt: <?php echo $priceTotal; ?>€</h1><a class="tokasse w-button" href="kauf.php">Zur Kasse</a>
     </div>
   </div>
   <div class="section-footer warenkorbfooter">
