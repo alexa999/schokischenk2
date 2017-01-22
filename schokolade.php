@@ -1,3 +1,4 @@
+<?php require( "datenbank.php" ); ?>
 <?php session_start(); ?>
 <?php if( !isset( $_SESSION["warenkorb"] )) {
   $_SESSION["warenkorb"] = array();
@@ -12,9 +13,21 @@ if( isset( $_GET[ "id" ] ) && !empty( $_GET[ "id" ] ) ) {
 if( isset( $_POST[ "Anzahl" ] ) && !empty( $_POST[ "Anzahl" ] )  ) {
   $gewuenschteAnzahl = $_POST[ "Anzahl" ];
   $idDesProduktes = $_POST[ "schokoID" ];
-  $warenkorbArray = array( 'anzahl' => $gewuenschteAnzahl, 'id' => $idDesProduktes );
-  array_push( $_SESSION["warenkorb"], $warenkorbArray );
-  $successfull = 'Warenkorb wurde aktualisiert';
+  $sql = "SELECT verfuegbarkeit FROM Gut where produktID = " . $idDesProduktes;
+  $result = $conn->query( $sql );
+  if( $result->num_rows > 0 ) {
+    $realeverfuegbarkeit = $result->fetch_row()[0];
+    
+    if ( $realeverfuegbarkeit < $gewuenschteAnzahl ) {
+      $successfull = 'Warenkorb wurde nicht aktualisiert, bitte Menge reduzieren';
+    }
+    else {
+      $warenkorbArray = array( 'anzahl' => $gewuenschteAnzahl, 'id' => $idDesProduktes );
+      array_push( $_SESSION["warenkorb"], $warenkorbArray );
+      $successfull = 'Warenkorb wurde aktualisiert';
+    } 
+  }
+
 }
 else {
   $successfull = '';

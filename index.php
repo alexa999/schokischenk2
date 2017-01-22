@@ -1,4 +1,91 @@
 <?php require( 'datenbank.php' ); ?>
+<?php
+function handleREST($server,$get) {
+  $url = (array_key_exists('PATH_INFO',$server) ? $server['PATH_INFO'] : '/');
+  $method = $server['REQUEST_METHOD'];
+  parse_str(file_get_contents('php://input'),$contentargs);
+  $arguments = array_merge($get,$contentargs);
+  $accept = array_key_exists('HTTP_ACCEPT',$server) ? $server['HTTP_ACCEPT'] : '*/*';
+  $uri = $_SERVER["REQUEST_URI"];
+  $ret = new StdClass;
+  $ret->uri = $uri;
+  $ret->url = $url;
+  $ret->method = $method;
+  $ret->arguments = $arguments;
+  $ret->accept = $accept;
+  return $ret;
+}
+$rest = handleRest( $_SERVER, $_GET );
+
+if( $rest->method == 'GET' && preg_match('!\/suche\/\d+!',$rest->uri)) {
+  header( 'Content-type: text/xml' );
+  echo '<Produkte>';
+  $parameters = explode( '/', $rest->uri );
+  $schokoid = $parameters[3];
+  
+  $sql = "SELECT * FROM Gut WHERE produktID = " . $schokoid;
+  $result = $conn->query( $sql );
+  if( $result->num_rows > 0 ) {
+    $singleSchoko = $result->fetch_row();
+    if( $singleSchoko[8] > 0 ) {
+      $verfuegbar = "verfuegbar";
+    }
+    else {
+      $verfuegbar = "nicht verfuegbar";
+    }
+    echo '<Produkt>';
+    echo '<Produkt-ID>' . $singleSchoko[0] . '</Produkt-ID>';
+    echo '<Produktname>' . $singleSchoko[3] . '</Produktname>';
+    echo '<Schokolade>' . $singleSchoko[1] . '</Schokolade>';
+    echo '<Schokoladengroeße>' . $singleSchoko[2] . '</Schokoladengroeße>';
+    echo '<Verpackung>';
+    echo '<Farbe>' . $singleSchoko[5] . '</Farbe>';
+    echo '<Sticker>' . $singleSchoko[6] . '</Sticker>';
+    echo '<Text>' . $singleSchoko[7] . '</Text>';
+    echo '</Verpackung>';
+    echo '<Verfuegbarkeit>' . $verfuegbar . '</Verfuegbarkeit>';
+    echo '<Preis>' . $singleSchoko[4] . '</Preis>';
+    echo '</Produkt>';
+  }
+
+  echo '</Produkte>';
+  die;
+ 
+}
+if( $rest->method == 'GET' && preg_match('!\/suche\/*!',$rest->uri)) {
+  header( 'Content-type: text/xml' );
+  $sql = "SELECT * FROM Gut";
+  $result =  $conn->query( $sql );
+  $row = $result->fetch_all();
+  echo '<?xml version="1.0"?>';
+  echo '<Produkte>';
+
+  foreach( $row as $singleSchoko ) {
+    if( $singleSchoko[8] > 0 ) {
+      $verfuegbar = "verfuegbar";
+    }
+    else {
+      $verfuegbar = "nicht verfuegbar";
+    }
+    echo '<Produkt>';
+    echo '<Produkt-ID>' . $singleSchoko[0] . '</Produkt-ID>';
+    echo '<Produktname>' . $singleSchoko[3] . '</Produktname>';
+    echo '<Schokolade>' . $singleSchoko[1] . '</Schokolade>';
+    echo '<Schokoladengroeße>' . $singleSchoko[2] . '</Schokoladengroeße>';
+    echo '<Verpackung>';
+    echo '<Farbe>' . $singleSchoko[5] . '</Farbe>';
+    echo '<Sticker>' . $singleSchoko[6] . '</Sticker>';
+    echo '<Text>' . $singleSchoko[7] . '</Text>';
+    echo '</Verpackung>';
+    echo '<Verfuegbarkeit>' . $verfuegbar . '</Verfuegbarkeit>';
+    echo '<Preis>' . $singleSchoko[4] . '</Preis>';
+    echo '</Produkt>';
+  }
+  echo '</Produkte>';
+  die;
+}
+?>
+
 <!DOCTYPE html>
 <!--  This site was created in Webflow. http://www.webflow.com -->
 <!--  Last Published: Wed Jan 11 2017 23:34:30 GMT+0000 (UTC)  -->
