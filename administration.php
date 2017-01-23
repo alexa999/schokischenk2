@@ -4,7 +4,7 @@ session_start();
 
 <!DOCTYPE html>
 <!--  This site was created in Webflow. http://www.webflow.com -->
-<!--  Last Published: Sat Jan 21 2017 16:14:31 GMT+0000 (UTC)  -->
+<!--  Last Published: Mon Jan 23 2017 13:44:50 GMT+0000 (UTC)  -->
 <html data-wf-page="58832e3dd9fbf8e65ddfa837" data-wf-site="5870e9af48ff79596f35ed23">
 <head>
   <meta charset="utf-8">
@@ -31,10 +31,21 @@ session_start();
   <link href="images/psiuico.png" rel="shortcut icon" type="image/x-icon">
   <link href="images/psiusafari.png" rel="apple-touch-icon">
 </head>
-<body class="featured-slide1"><img src="images/Logo-Schokischenk-98x98.svg" width="81">
+<body class="featured-slide1">
+  <div class="w-clearfix"><img src="images/Logo-Schokischenk-98x98.svg" width="81"><a class="logoutbutton w-button" href="index.html">Logout</a>
+  </div>
+  <div></div>
   <div>
-    <h1 class="adminheader">Administration</h1>
-  </div><a class="adminbutton w-button" href="admin-produktliste.html">Produktliste einsehen</a><a class="adminbutton w-button" href="admin-update.html">Bestehendes Produkt aktualisieren</a><a class="adminbutton w-button" href="admin-neuesprodukt.html">Neues Produkt hinzufügen</a><a class="adminbutton w-button" href="admin-loschen.html">Bestehendes Produkt löschen</a>
+    <h1>Administration</h1>
+  </div>
+  <div class="admindiv"><a class="adminbutton w-button" href="admin-produktliste.php" id="ProduktlisteButton">Produktliste einsehen</a>
+  </div>
+  <div class="admindiv w-clearfix"><a class="adminbutton w-button" href="admin-update.php" id="UpdateButton">Bestehendes Produkt aktualisieren</a>
+  </div>
+  <div class="admindiv"><a class="adminbutton w-button" href="admin-neuesprodukt.php" id="NeuButton">Neues Produkt hinzufügen</a>
+  </div>
+  <div class="admindiv"><a class="adminbutton w-button" href="admin-loeschen.php" id="DeleteButton">Bestehendes Produkt löschen</a>
+  </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js" type="text/javascript"></script>
   <script src="js/webflow.js" type="text/javascript"></script>
   <!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
