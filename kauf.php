@@ -1,7 +1,7 @@
 <?php require( 'datenbank.php' );
     session_start();
     // zum testen: muss bitte rausgenommen werden!
-    $_SESSION["email"] = "max@muster.at";
+  //  $_SESSION["email"] = "max@muster.at";
     ?>
 <!DOCTYPE html>
 <!--  This site was created in Webflow. http://www.webflow.com -->
