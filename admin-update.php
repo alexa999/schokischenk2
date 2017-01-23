@@ -4,7 +4,7 @@ session_start();
 
 <!DOCTYPE html>
 <!--  This site was created in Webflow. http://www.webflow.com -->
-<!--  Last Published: Sat Jan 21 2017 16:14:31 GMT+0000 (UTC)  -->
+<!--  Last Published: Mon Jan 23 2017 13:44:50 GMT+0000 (UTC)  -->
 <html data-wf-page="58834054e299102d3a02838b" data-wf-site="5870e9af48ff79596f35ed23">
 <head>
   <meta charset="utf-8">
@@ -31,13 +31,26 @@ session_start();
   <link href="images/psiuico.png" rel="shortcut icon" type="image/x-icon">
   <link href="images/psiusafari.png" rel="apple-touch-icon">
 </head>
-<body class="featured-slide2"><img src="images/Logo-Schokischenk-98x98.svg" width="75">
+<body class="featured-slide1">
+  <div>
+    <div class="adminnavi w-nav" data-animation="default" data-collapse="medium" data-duration="400">
+      <a class="w-nav-brand" href="#"><img src="images/Logo-Schokischenk-98x98.svg">
+      </a>
+      <div class="adminheader w-container">
+        <nav class="adminmenue w-nav-menu" role="navigation"><a class="adminhome w-nav-link" href="administration.php">Home</a><a class="adminnaviliste w-nav-link" href="admin-produktliste.php">Produktliste einsehen</a><a class="adminnaviupdate w-nav-link" href="admin-update.php">Produkt aktualisieren</a><a class="adminnavineu w-nav-link" href="admin-neuesprodukt.php">Produkt hinzufügen</a><a class="adminnaviloeschen w-nav-link" href="admin-loeschen.php">Produkt löschen</a><a class="logoutbutton w-button" href="index.php">Logout</a>
+        </nav>
+        <div class="w-nav-button">
+          <div class="w-icon-nav-menu"></div>
+        </div>
+      </div>
+    </div>
+  </div>
   <h1>Bestehendes produkt<br><br> aktualisieren</h1>
   <div class="w-form">
     <form data-name="Email Form" id="email-form" name="email-form">
-      <label class="admintext" for="name">Produkt-ID:</label>
-      <input class="adminfeld w-input" data-name="Name" id="name" maxlength="256" name="name" placeholder="Füge die Produkt-ID ein" type="text">
-      <input class="adminbutton2 w-button" data-wait="Please wait..." type="submit" value="Anzeigen">
+      <label class="admintext" for="produktid">Produkt-ID:</label>
+      <input class="adminfeld w-input" data-name="Name" id="produktid" maxlength="256" name="name" placeholder="Füge die Produkt-ID ein" type="text">
+      <input class="adminbutton3 w-button" data-wait="Please wait..." id="anzeigenButton" type="submit" value="Anzeigen">
     </form>
     <div class="w-form-done">
       <div>Thank you! Your submission has been received!</div>
@@ -46,18 +59,11 @@ session_start();
       <div>Oops! Something went wrong while submitting the form</div>
     </div>
   </div>
-  <div class="w-dyn-list">
-    <div class="w-dyn-items">
-      <div class="w-dyn-item"></div>
-    </div>
-    <div class="w-dyn-empty">
-      <div>No items found.</div>
-    </div>
-  </div>
+  <div class="adminproduktfeld" id="ProduktFeld"></div>
   <div class="w-form">
     <form data-name="Email Form 2" id="email-form-2" method="post" name="email-form-2">
-      <label class="admintext" for="field">Wähle eine Spalte aus:</label>
-      <select produkt-id="integer" produktname="string" schokoladenart="string" class="adminfeld w-select" id="field" name="field">
+      <label class="admintext" for="spalte">Wähle eine Spalte aus:</label>
+      <select class="adminfeld w-select" id="spalte" name="field">
         <option value="">Select one...</option>
         <option value="Produkt-ID">Produkt-ID</option>
         <option value="Produktname">Produktname</option>
@@ -69,9 +75,9 @@ session_start();
         <option value="verpackungSticker">Sticker</option>
         <option value="verpackungText">Text</option>
       </select>
-      <label class="admintext" for="field-2">Gebe Änderungen ein:</label>
-      <input class="adminfeld w-input" id="field-2" maxlength="256" name="field-2" placeholder="Gebe Änderungen ein" required="required" type="text">
-      <input class="adminbutton2 w-button" data-wait="Please wait..." type="submit" value="Aktualisieren">
+      <label class="admintext" for="aenderungen">Gebe Änderungen ein:</label>
+      <input class="adminfeld w-input" id="aenderungen" maxlength="256" name="field-2" placeholder="Gebe Änderungen ein" required="required" type="text">
+      <input class="adminbutton3 w-button" data-wait="Please wait..." id="aktualisierenButton" type="submit" value="Aktualisieren">
     </form>
     <div class="w-form-done">
       <div>Thank you! Your submission has been received!</div>
@@ -90,17 +96,17 @@ session_start();
 
 <?
 # Verbindung zu Datenbank herstellen
-$dbverbindung = require( "datenbank.php" ); 
+require( "datenbank.php" ); 
 
 ## Id von Seite holen
 
-if(isset($_GET["name"])) {
-	$shopid = $_GET["name"];
+if(isset($_POST["name"])) {
+	$shopid = $_POST["name"];
 } 
 
 #IDs vergleichen
 if ($sql = "SELECT produktID FROM Gut WHERE produktID = '$shopid'") {
-	$ergebnis = mysqli_query($dbverbindung,$sql);
+	$ergebnis = mysqli_query($conn,$sql);
 	echo $ergebnis;
 } else {
          $fehler = "Produkt-ID ist nicht vergeben. Bitte neue Produkt-ID eingeben.";
@@ -108,17 +114,18 @@ if ($sql = "SELECT produktID FROM Gut WHERE produktID = '$shopid'") {
       }
 
 ## Spalte von Seite holen
-if(isset($_GET["field"])) {
-	$shopspalte = $_GET["field"];
+if(isset($_POST["field"])) {
+	$shopspalte = $_POST["field"];
 }
 
 ## Änderung von Seite holen
-if(isset($_GET["field-2"])) {
-	$shopaender = $_GET["field-2"];
+if(isset($_POST["field-2"])) {
+	$shopaender = $_POST["field-2"];
 }
 	  
-## Wenn auf Button geklickt wird (ERGAENZEN!!!!)	
- 
-$eintrag = "UPDATE Gut SET '$shopspalte' = '$shopaender' WHERE produktID = '$shopid'";
-$eintragen = mysqli_query($dbverbindung, $eintrag);
+## Wenn auf Button geklickt wird, Produkt updaten	
+if(isset($_POST['aktualisierenButton'])){ 
+	$update = "UPDATE Gut SET '$shopspalte' = '$shopaender' WHERE produktID = '$shopid'";
+	$eintragen = mysqli_query($conn, $update);
+}
 ?>
