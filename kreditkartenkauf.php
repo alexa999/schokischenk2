@@ -60,43 +60,32 @@
     
     else{
     echo '<div class="w-form">';
-    echo '<form data-name="Email Form" id="email-form" name="email-form" method="post" >';
+    echo '<form data-name="Email Form" id="email-form" name="email-form" method="post" action="kreditkartenkauf.php">';
         echo '<label class="field-label" for="Kreditkartennummer">Kreditkartennummer:</label>';
             echo '<input class="w-input" data-name="Kreditkartennummer1" id="Kreditkartennummer1" maxlength="16" name="Kreditkartennummer1" placeholder="Geben Sie hier Ihre Kreditkartennummer ein" type="integer">';
+        
             echo '<label class="field-label" for="Gueltig">Gültig bis:</label>';
                 echo '<input class="w-input" data-name="Gueltigb1" id="Gueltigb1" maxlength="5" name="Gueltigb1" placeholder="MM/YY" required="required" type="text">';
                 echo '<label class="field-label" for="CVC">CVC:</label>';
                     echo '<input class="w-input" data-name="CVC1" id="CVC1" maxlength="3" name="CVC1" placeholder="CVC" required="required" type="integer">';
                     echo'<input class="w-button" data-wait="Please wait..." type="submit" name ="submit" value="Submit">';
+        echo '</form>';
        echo '</div>';
-        
-        if (isset ($_POST["Kreditkartennummer1"]) && ($_POST["Gueltigb1"]) && ($_POST["CVC1"])){
-            $Kreditkartennummer1 =  $_POST['Kreditkartennummer1'];
-            $Gueltigb1 = $_POST['Gueltigb1'];
-            $CVC1 = $_POST['CVC1'];
+     //var_dump($_POST);
+        if (isset ($_POST["submit"])){
             
-            $sql="UPDATE Kunde SET Kreditkartennummer='".$Kreditkartennummer1."',Gueltig='".$Gueltigb1."',CVC='".$CVC1."' WHERE Email = '". $mail. "'";
-            $retval = mysqli_query( $sql, $conn );
-            echo mysql_error();
-            echo 'nummer1:' .$Kreditkartennummer1 ;
+            $Kreditkartennummer2 =  $_POST['Kreditkartennummer1'];
+            $Gueltigb2 = $_POST['Gueltigb1'];
+            $CVC2 = $_POST['CVC1'];
+            
+            $sql="UPDATE Kunde SET Kreditkartennummer='".$Kreditkartennummer2."',Gueltig='".$Gueltigb2."',CVC='".$CVC2."' WHERE Email = '". $mail. "'";
+            $retval = mysqli_query( $conn, $sql );
+            echo mysqli_error();
             }
         else{
-            echo 'failure biatch';
+            echo 'failure';
         }
-        
-     //  $Kreditkartennummer2 =  (isset($_GET['Kreditkartennummer1']) ? $_GET['Kreditkartennummer1'] : null);
-    //    $Gueltig2=  (isset($_GET['Gueltig1']) ? $_GET['Gueltig1'] : null);
-      //  $CVC2=  (isset($_GET['CVC1']) ? $_GET['CVC1'] : null);
-    
-        //$insert = mysql_query("INSERT INTO Kunde (Kreditkartennummer, Gueltig, CVC) VALUES (' ".$Kreditkartennummer1."', '".$Gueltig1."', '".$CVC1."')");
-      /*  try {
-            //"INSERT INTO (`Kreditkartennummer`, `Gueltig`, `CVC`) VALUES (['$Kreditkartennummer2'],['$Gueltig2'],['$CVC2'])";
 
-                    }
-        catch(PDOException $e)
-        {
-            echo $sql . "<br>" . $e->getMessage();
-        }*/
           }
     
     ?>
@@ -104,13 +93,6 @@
 </div><br>
 <br>
 <br>
-
-<?php
-    $sql = "SELECT * FROM Kunde WHERE (Email = '". $mail. "')";
-    $result = $conn->query( $sql );
-    $kunde =  mysqli_fetch_array($result, MYSQL_ASSOC);
-echo 'nummer2:' .$kunde['Kreditkartennummer'];
-    ?>
 
 </form>
 <div class="w-form-done">
