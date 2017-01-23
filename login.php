@@ -4,10 +4,12 @@ session_start();
 
 # Verbindung zu Datenbank herstellen
 require( "datenbank.php" ); 
-
+var_dump($_POST);
 # Auslöser: Buttonklick
 
 if(isset($_POST['login'])) {
+	var_dump($_POST);
+	
 	# Login prüfen
 
 	## email von Login holen
@@ -142,12 +144,12 @@ if(isset($_POST['login'])) {
   </div>
   <h1 class="headerlogin">login</h1>
   <div class="w-form">
-    <form class="w-clearfix" data-name="Email Form" id="email-form" name="email-form" method = "POST">
+    <form class="w-clearfix" data-name="Email Form" id="email-form" name="email-form" method = "POST" action="login.php">
       <label class="logintext" for="email">Email Address:</label>
       <input class="loginfeld w-input" data-name="Email" id="email" maxlength="256" name="email" placeholder="Enter your email address" required="required" type="email">
       <label class="logintext" for="password">Passwort:</label>
-      <input class="loginfeld w-input" data-name="Name" id="password" maxlength="256" name="name" placeholder="Enter your password" type="text">
-      <input class="loginbutton2 w-button" data-wait="Please wait..." id="loginbutton" type="submit" value="login">
+      <input class="loginfeld w-input" data-name="Name" id="password" maxlength="256" name="password" placeholder="Enter your password" type="text">
+      <input class="loginbutton2 w-button" data-wait="Please wait..." id="loginbutton" type="submit" value="login" name="loginbutton">
     </form>
    
   </div>
