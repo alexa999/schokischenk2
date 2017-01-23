@@ -4,29 +4,23 @@ session_start();
 
 # Verbindung zu Datenbank herstellen
 require( "datenbank.php" ); 
-var_dump($_POST);
-# Auslöser: Buttonklick
 
-if(isset($_POST['login'])) {
-	var_dump($_POST);
+# Auslöser: Buttonklick
+if(isset($_POST['loginbutton'])) {
 	
 	# Login prüfen
-
 	## email von Login holen
 	## password von Login holen
-
 	if(!empty($_POST["email"]) && !empty($_POST["password"])) {
 		$shopemail = $_POST["email"];
 		$shoppassword = $_POST["password"];
-
         ## Email und Passwort von Login mit Email und Password von Datenbank (Administrator) vergleichen
         $ergebnisAdmin = "SELECT Email FROM Administrator WHERE "
             ." Email = '".mysqli_real_escape_string($conn, $shopemail)."' and "
             ."Password = '".mysqli_real_escape_string($conn, $shoppassword)."'";
-
-        $query = mysqli_query($conn, $ergebnisAdmin);
+		$query = mysqli_query($conn, $ergebnisAdmin);
 		$anzahlAdmin = mysqli_num_rows($query);
-	
+		
 		# Wenn Anzahl 1 ist, loggt sich ein Admin ein
 		if($anzahlAdmin == 1) {
 			$row = mysqli_fetch_array($query, MYSQLI_ASSOC);
@@ -39,33 +33,19 @@ if(isset($_POST['login'])) {
                 ."Password = '".mysqli_real_escape_string($conn, $shoppassword)."'";
             $ergebnis = mysqli_query($conn,$sql);
             $row = mysqli_fetch_array($ergebnis, MYSQLI_ASSOC);
-            #$active = $row['active'];
             $anzahl = mysqli_num_rows($ergebnis);
-
             # Wenn beides übereinstimmt, ist die Anzahl der Reihen 1
             if($anzahl == 1) {
                 # Session zuordnen
                 $_SESSION["email"] = $shopemail;
-
                 # Auf Startseite weiterleiten
                 header('Location: index.php');
-
             } else {
                 echo  "Passwort und Email stimmen nicht überein! Überprüfen Sie Ihre Passworteingabe.";
             }
         }
-    } else {
-        print 'Form post sent vars not valid';
-    }
+    } 
 }
-
-
- #<div class="w-form-done">
-     # <div>Thank you! Your submission has been received!</div>
-   # </div>
-    #<div class="w-form-fail">
-    #  <div>Oops! Something went wrong while submitting the form</div>
-   # </div>
 ?>
 
 <!DOCTYPE html>
