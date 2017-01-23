@@ -7,8 +7,7 @@ require( "datenbank.php" );
 
 # Auslöser: Buttonklick
 
-    if(isset($_POST['login'])){    
-
+if(isset($_POST['login'])) {
 	# Login prüfen
 
 	## email von Login holen
@@ -17,56 +16,48 @@ require( "datenbank.php" );
 	if(isset($_POST["email"])&& !empty($_POST["email"]) && isset($_POST["password"])&& !empty($_POST["password"])) {
 		$shopemail = $_POST["email"];
 		$shoppassword = $_POST["password"];
-	
-		## Email von Login mit Email von Datenbank (Administrator) vergleichen, um zu prüfen, ob sich ein Admin einloggt
-		$sqlAdmin = "SELECT Email FROM Administrator WHERE Email = '$shopemail'";
-		$ergebnisAdmin = mysqli_real_escape_string($conn,$sqlAdmin);
-		$anzahlAdmin = mysqli_num_rows($ergebnisAdmin);
+        ## Email und Passwort von Login mit Email und Password von Datenbank (Administrator) vergleichen
+        $ergebnisAdmin = "SELECT Email FROM Administrator WHERE "
+            ." Email = '".mysqli_real_escape_string($conn, $shopemail)."' and "
+            ."Password = '".mysqli_real_escape_string($conn, $shoppassword)."'";
+
+        $query = mysqli_query($conn, $ergebnisAdmin);
+		$anzahlAdmin = mysqli_num_rows($query);
 	
 		# Wenn Anzahl 1 ist, loggt sich ein Admin ein
 		if($anzahlAdmin == 1) {
-	
-			## Email und Passwort von Login mit Email und Password von Datenbank (Administrator) vergleichen
-			$sql = "SELECT Email FROM Administrator WHERE Email = '$shopemail' and Password = '$shoppassword'";
-			$ergebnis = mysqli_real_escape_string($conn,$sql);
-			$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-			#$active = $row['active'];
-			$anzahl = mysqli_num_rows($ergebnis);
-      
-			# Wenn beides übereinstimmt, ist die Anzahl der Reihen 1
-			if($anzahl == 1) {
-				# Session zuordnen
-				$_SESSION["email"] = $shopemail;
-		 
-				# Auf Administrationsseite weiterleiten
-				header('Location: http://localhost/schokischenk/administration.php');
-				
-			}else {
-				$fehler = "Passwort und Email stimmen nicht überein! Überprüfen Sie Ihre Passworteingabe.";
-				echo $fehler;
-			}
-		}else {
-			$sql = "SELECT Email FROM Kunde WHERE Email = '$shopemail' and Password = '$shoppassword'";
-			$ergebnis = mysqli_real_escape_string($conn,$sql);
-			$row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-			#$active = $row['active'];
-			$anzahl = mysqli_num_rows($ergebnis);
-      
-			# Wenn beides übereinstimmt, ist die Anzahl der Reihen 1
-			if($anzahl == 1) {
-				# Session zuordnen
-				$_SESSION["email"] = $shopemail;
-		 
-				# Auf Startseite weiterleiten
-				header('Location: http://localhost/schokischenk/index.php');
-		 
-			}else {
-				$fehler = "Passwort und Email stimmen nicht überein! Überprüfen Sie Ihre Passworteingabe.";
-				echo $fehler;
-			}
-		}
-	}	
+			$row = mysqli_fetch_array($query, MYSQLI_ASSOC);
+            $_SESSION["email"] = $shopemail;
+            # Auf Administrationsseite weiterleiten
+            header('Location: http://localhost/schokischenk/administration.php');
+        } else {
+            $fehler = "Passwort und Email stimmen nicht überein! Überprüfen Sie Ihre Passworteingabe.";
+            echo $fehler;
+        }
+    } else {
+        $sql = "SELECT Email FROM Kunde WHERE "
+            ."Email = '".mysqli_real_escape_string($conn, $shopemail)."' and "
+            ."Password = '".mysqli_real_escape_string($conn, $shoppassword)."'";
+        $ergebnis = mysqli_query($conn,$sql);
+        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+        #$active = $row['active'];
+        $anzahl = mysqli_num_rows($ergebnis);
+
+        # Wenn beides übereinstimmt, ist die Anzahl der Reihen 1
+        if($anzahl == 1) {
+            # Session zuordnen
+            $_SESSION["email"] = $shopemail;
+
+            # Auf Startseite weiterleiten
+            header('Location: http://localhost/schokischenk/index.php');
+
+        }else {
+            $fehler = "Passwort und Email stimmen nicht überein! Überprüfen Sie Ihre Passworteingabe.";
+            echo $fehler;
+        }
+    }
 }
+
 
  #<div class="w-form-done">
      # <div>Thank you! Your submission has been received!</div>
