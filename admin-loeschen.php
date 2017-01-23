@@ -82,6 +82,21 @@ if(isset($_POST["produktid"]) && !empty($_POST["produktid"])) {
 # Ids vergleichen
 	if (mysqli_num_rows($ergebnis) == 1) {
 		
+		$produkt = $ergebnis -> fetch_all();
+		
+		foreach($produkt as $produktanzeige) {
+			echo "<tr>";
+			echo '<td width="80" align="center">' . $produktanzeige[0] . '</td>';
+			echo '<td width="150" align="center">' . $produktanzeige[1] . '</td>';
+			echo '<td width="150" align="center">' . $produktanzeige[2] . '</td>';
+			echo '<td width="300" align="center">' . $produktanzeige[3] . '</td>';
+			echo '<td width="80" align="center">' . $produktanzeige[4] . '</td>';
+			echo '<td width="180" align="center">' . $produktanzeige[5] . '</td>';
+			echo '<td width="120" align="center">' . $produktanzeige[6] . '</td>';
+			echo '<td width="220" align="center">' . $produktanzeige[7] . '</td>';
+			echo '<td width="100" align="center">' . $produktanzeige[8] . '</td>';
+			echo '</tr>';
+			}
 		
 	} else {
          $fehler = "Produkt-ID ist nicht vergeben. Bitte neue Produkt-ID eingeben.";
