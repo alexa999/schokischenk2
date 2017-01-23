@@ -6,14 +6,8 @@ session_start();
 require( "datenbank.php" ); 
 
 # Auslöser: Buttonklick
-if($_POST){
-    if(isset($_POST['login'])){
-        login();
-    }
-}
 
-function login() {
-       
+    if(isset($_POST['login'])){    
 
 	# Login prüfen
 
@@ -26,7 +20,7 @@ function login() {
 	
 		## Email von Login mit Email von Datenbank (Administrator) vergleichen, um zu prüfen, ob sich ein Admin einloggt
 		$sqlAdmin = "SELECT Email FROM Administrator WHERE Email = '$shopemail'";
-		$ergebnisAdmin = mysqli_real_escape_string($conn,$sql);
+		$ergebnisAdmin = mysqli_real_escape_string($conn,$sqlAdmin);
 		$anzahlAdmin = mysqli_num_rows($ergebnisAdmin);
 	
 		# Wenn Anzahl 1 ist, loggt sich ein Admin ein
