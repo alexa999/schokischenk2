@@ -15,9 +15,10 @@ if(isset($_POST['login'])) {
 	## email von Login holen
 	## password von Login holen
 
-	if(isset($_POST["email"])&& !empty($_POST["email"]) && isset($_POST["password"])&& !empty($_POST["password"])) {
+	if(!empty($_POST["email"]) && !empty($_POST["password"])) {
 		$shopemail = $_POST["email"];
 		$shoppassword = $_POST["password"];
+
         ## Email und Passwort von Login mit Email und Password von Datenbank (Administrator) vergleichen
         $ergebnisAdmin = "SELECT Email FROM Administrator WHERE "
             ." Email = '".mysqli_real_escape_string($conn, $shopemail)."' and "
@@ -31,32 +32,30 @@ if(isset($_POST['login'])) {
 			$row = mysqli_fetch_array($query, MYSQLI_ASSOC);
             $_SESSION["email"] = $shopemail;
             # Auf Administrationsseite weiterleiten
-            header('Location: http://localhost/schokischenk/administration.php');
+            header('Location: administration.php');
         } else {
-            $fehler = "Passwort und Email stimmen nicht überein! Überprüfen Sie Ihre Passworteingabe.";
-            echo $fehler;
+            $sql = "SELECT Email FROM Kunde WHERE "
+                ."Email = '".mysqli_real_escape_string($conn, $shopemail)."' and "
+                ."Password = '".mysqli_real_escape_string($conn, $shoppassword)."'";
+            $ergebnis = mysqli_query($conn,$sql);
+            $row = mysqli_fetch_array($ergebnis, MYSQLI_ASSOC);
+            #$active = $row['active'];
+            $anzahl = mysqli_num_rows($ergebnis);
+
+            # Wenn beides übereinstimmt, ist die Anzahl der Reihen 1
+            if($anzahl == 1) {
+                # Session zuordnen
+                $_SESSION["email"] = $shopemail;
+
+                # Auf Startseite weiterleiten
+                header('Location: index.php');
+
+            } else {
+                echo  "Passwort und Email stimmen nicht überein! Überprüfen Sie Ihre Passworteingabe.";
+            }
         }
     } else {
-        $sql = "SELECT Email FROM Kunde WHERE "
-            ."Email = '".mysqli_real_escape_string($conn, $shopemail)."' and "
-            ."Password = '".mysqli_real_escape_string($conn, $shoppassword)."'";
-        $ergebnis = mysqli_query($conn,$sql);
-        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-        #$active = $row['active'];
-        $anzahl = mysqli_num_rows($ergebnis);
-
-        # Wenn beides übereinstimmt, ist die Anzahl der Reihen 1
-        if($anzahl == 1) {
-            # Session zuordnen
-            $_SESSION["email"] = $shopemail;
-
-            # Auf Startseite weiterleiten
-            header('Location: http://localhost/schokischenk/index.php');
-
-        }else {
-            $fehler = "Passwort und Email stimmen nicht überein! Überprüfen Sie Ihre Passworteingabe.";
-            echo $fehler;
-        }
+        print 'Form post sent vars not valid';
     }
 }
 
