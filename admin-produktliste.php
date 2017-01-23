@@ -37,7 +37,7 @@ session_start();
       <div class="adminheader w-container">
         <a class="w-nav-brand" href="#"><img src="images/Logo-Schokischenk-98x98.svg" width="101">
         </a>
-        <nav class="adminmenue w-nav-menu" role="navigation"><a class="adminhome w-nav-link" href="administration.html" id="HomeButton">Home</a><a class="adminnaviliste w-nav-link" href="admin-produktliste.html" id="ProduktEinsehenButton">Produktliste einsehen</a><a class="adminnaviupdate w-nav-link" href="admin-update.html" id="ProduktUpdateButton">Produkt aktualisieren</a><a class="adminnavineu w-nav-link" href="admin-neuesprodukt.html" id="ProduktHinzufuegenButton">Produkt hinzufügen</a><a class="adminnaviloeschen w-nav-link" href="admin-loschen.html" id="ProduktLoeschenButton">Produkt löschen</a><a class="logoutbutton w-button" href="index.html" id="LogoutButton">Logout</a>
+        <nav class="adminmenue w-nav-menu" role="navigation"><a class="adminhome w-nav-link" href="administration.php" id="HomeButton">Home</a><a class="adminnaviliste w-nav-link" href="admin-produktliste.php" id="ProduktEinsehenButton">Produktliste einsehen</a><a class="adminnaviupdate w-nav-link" href="admin-update.php" id="ProduktUpdateButton">Produkt aktualisieren</a><a class="adminnavineu w-nav-link" href="admin-neuesprodukt.php" id="ProduktHinzufuegenButton">Produkt hinzufügen</a><a class="adminnaviloeschen w-nav-link" href="admin-loeschen.php" id="ProduktLoeschenButton">Produkt löschen</a><a class="logoutbutton w-button" href="index.php" id="LogoutButton">Logout</a>
         </nav>
       </div>
     </div>
