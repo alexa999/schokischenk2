@@ -245,10 +245,10 @@ try{Typekit.load();}catch(e){}
             // Fuer SQL: FROM_UNIXTIME(".$birthDate.")
        // $birth= FROM_UNIXTIME(". $birthDate.");
     
-        echo '"'. $nachname .'"';
+      //  echo '"'. $nachname .'"';
 
         $_SESSION["email"] = $email;
-        var_dump($_POST);
+      //  var_dump($_POST);
         
         $sql="INSERT INTO Kunde(Vorname, Nachname, Geburtstag, Email, Anrede, Password, Kreditkartennummer, Gueltig, CVC) VALUES ([".$vorname."],[".$nachname."],[FROM_UNIXTIME(".$birthDate.")],[".$email."],[".$anrede."],[".$password."])";
         $retval = mysqli_query( $conn, $sql );
