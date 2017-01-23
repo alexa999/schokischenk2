@@ -1,7 +1,7 @@
 <?php require( 'datenbank.php' );
     session_start();
     // zum testen: muss bitte rausgenommen werden!
-  $_SESSION["email"] = "lisa@muster.at";
+//  $_SESSION["email"] = "lisa@muster.at";
     ?>
 
 <!DOCTYPE html>
