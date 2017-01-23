@@ -1,6 +1,10 @@
-<?php require( 'datenbank.php' );
-   
-    ?>
+<?php
+require( 'datenbank.php' );
+
+$birthDate = mktime(0, 0, 0, $_POST['field-4'], $_POST['field-3'], $_POST['field-5']);
+// Fuer SQL: FROM_UNIXTIME(".$birthDate.")
+
+?>
 
 
 <!DOCTYPE html>
