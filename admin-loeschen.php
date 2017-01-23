@@ -75,19 +75,22 @@ require( "datenbank.php" );
 ## Id von Seite holen
 if(isset($_POST["produktid"]) && !empty($_POST["produktid"])) {
 	$shopid = $_POST["produktid"];
-} 
 
-# Ids vergleichen
-if ($sql = "SELECT produktID FROM Gut WHERE produktID = '$shopid'") {
+	$sql = "SELECT * FROM Gut WHERE produktID = '$shopid'";
 	$ergebnis = mysqli_query($conn,$sql);
-	echo $ergebnis;
-} else {
+	
+# Ids vergleichen
+	if (mysqli_num_rows($ergebnis) == 1) {
+		
+		
+	} else {
          $fehler = "Produkt-ID ist nicht vergeben. Bitte neue Produkt-ID eingeben.";
 		 echo $fehler;
       }
 
-# Produkt löschen
-if(isset($_POST['deletebutton'])){ 
+	# Produkt löschen
+	if(isset($_POST['deletebutton'])){ 
 	$delete = "DELETE FROM Gut WHERE produktID = '$shopid'";
+	}
 }
 ?>

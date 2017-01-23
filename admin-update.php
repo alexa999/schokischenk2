@@ -76,19 +76,17 @@ require( "datenbank.php" );
 
 if(isset($_POST["produktid"]) && !empty($_POST["produktid"])) {
 	$shopid = $_POST["produktid"];
+	
+	$sql = "SELECT * FROM Gut WHERE produktID = '".$shopid."'";
+	$ergebnis = mysqli_query($conn,$sql);
+	$ergebnisreihen = mysqli_num_rows($ergebnis);
  
 	#IDs vergleichen
-	if ($sql = "SELECT * FROM Gut WHERE produktID = '".$shopid."'") {
-		$ergebnis = mysqli_query($conn,$sql);
-		$ergebnisreihen = mysqli_num_rows($ergebnis);
-
-		if($ergebnisreihen <= 0 ) {
-			echo "Ich habe keine Produkte gefunden";
-		}else {
-			$produkt = $ergebnis -> fetch_all();
-			$counter = 0;
-			
-			foreach($produkt as $produktanzeige) {
+	if ($ergebnisreihen == 1) {
+		
+		$produkt = $ergebnis -> fetch_all();
+		
+		foreach($produkt as $produktanzeige) {
 			echo "<tr>";
 			echo '<td width="80" align="center">' . $produktanzeige[0] . '</td>';
 			echo '<td width="150" align="center">' . $produktanzeige[1] . '</td>';
@@ -101,14 +99,13 @@ if(isset($_POST["produktid"]) && !empty($_POST["produktid"])) {
 			echo '<td width="100" align="center">' . $produktanzeige[8] . '</td>';
 			echo '</tr>';
 			}
-			$counter++;
+			
 		}
 		
 	} else {
          $fehler = "Produkt-ID ist nicht vergeben. Bitte neue Produkt-ID eingeben.";
 		 echo $fehler;
       }	
-}
 ?>
 </tbody>
  </table>
