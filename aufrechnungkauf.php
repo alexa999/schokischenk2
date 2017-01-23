@@ -1,3 +1,8 @@
+<?php require( 'datenbank.php' );
+    session_start();
+    // zum testen: muss bitte rausgenommen werden!
+    $_SESSION["email"] = "max@muster.at";
+    ?>
 <!DOCTYPE html>
 <!--  This site was created in Webflow. http://www.webflow.com -->
 <!--  Last Published: Sat Jan 21 2017 20:03:50 GMT+0000 (UTC)  -->
@@ -36,9 +41,28 @@
     <p>Die Rechnung wird mit Ihrer Sendung geliefert und wir freuen uns über eine zeitgerechte Einzahlung des Gesamtbetrages in den zwei Woche nach Erhalt der Lieferung.</p>
   </div>
   <div class="divrechnung">
-    <div class="admintext">Liefer- und Rechnungsadresse:</div>
+    <h3 class="admintext">Liefer- und Rechnungsadresse</h3>
+
+<?php
+    $mail = mysqli_real_escape_string($conn,$_SESSION["email"]);
+    $sql = "SELECT * FROM Kunde WHERE (Email LIKE '". $mail. "')";
+    $result = $conn->query( $sql );
+    $kunde =  mysqli_fetch_array($result, MYSQL_ASSOC);
+    
+    echo '<div class="w-col w-col-8">';
+    echo '<h4 class="vorname">Vorname:'. $kunde['Vorname'] . '</h4><br>';
+    echo '<h4 class="nachname">Nachname: ' . $kunde['Nachname'] . '</h4><br>';
+    echo '<h4 class="adresse">Adresse: ' . $kunde['Adresse'] . '</h4><br>';
+    echo '<h4 class="telefonnummer">Telefonnummer: ' . $kunde['Telefonnummer'] . '</h4><br>';
+    echo '<br>';
+   echo '<a href="danke.php">Zahlungspflichtig bestellen</a>';
+    echo '</div>';
+    ?>
+
   </div>
+
   <div></div>
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js" type="text/javascript"></script>
   <script src="js/webflow.js" type="text/javascript"></script>
   <!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->

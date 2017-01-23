@@ -1,5 +1,7 @@
 <?php require( 'datenbank.php' );
     session_start();
+    // zum testen: muss bitte rausgenommen werden!
+    $_SESSION["email"] = "max@muster.at";
     ?>
 <!DOCTYPE html>
 <!--  This site was created in Webflow. http://www.webflow.com -->
@@ -35,72 +37,69 @@
     <h1>Kassa</h1>
   </div>
   <p data-ix="text1">Hier finden Sie nun Ihre finale Bestellung und können die Kaufmodalitäten auswählen.</p>
-  <div class="kaufliste w-dyn-list">
-    <div class="w-dyn-items">
-      <div class="w-dyn-item"></div>
-    </div>
-    <div class="w-dyn-empty" id="WarenkorbListe">
+
 <div>
 
 <?php
-    $sql='d';
-    if (isset($_GET['email'])){
-        
-        // check if search view of list view
-    $_GET['email'] = $_SESSION['email'];
-            $sql = "SELECT * FROM Warenkorb WHERE Email = '" . $_GET['email'] . "'";
-            $sql = "SELECT * FROM Warenkorb";
+    if(isset ($_SESSION["email"]) && !empty ($_SESSION["email"]) ){
     
-        // execute sql statement
-    mysqli_query($conn,$sql);
-    }
-    ?>
-
-<div id="table">
-<table style='border: 1px solid #DDDDDD'>
-<thead>
-<tr>
-<th>Produkt</th>
-<th>Anzahl</th>
-<th>Preis</th>
-
-</tr>
-</thead>
-<tbody>
-
-<?php
-    // fetch rows of the executed sql query
-    if ($result = mysqli_query($conn, $sql)) {
-        
-        /* fetch associative array */
-    
-        while ($row = mysqli_fetch_assoc($sql)) {
-            echo "<tr>";
-            echo "<td>" . $row['PRODUKTID'] . "</td>";
-            echo "<td>" . $row['ANZAHL'] . "</td>";
-            echo "<td>" . $row['PREIS'] . "</td>";
-            echo "</tr>";
+    if( isset( $_SESSION["warenkorb"]) && !empty( $_SESSION["warenkorb"] ) ) {
+    $priceTotal = 0;
+    $anzahlArray = count( $_SESSION["warenkorb"] );
+    $counter = 0;
+    foreach( $_SESSION["warenkorb"] as $einzelnesItem ) {
+        $schokoID = $einzelnesItem["id"];
+        $anzahl = $einzelnesItem["anzahl"];
+        $sql = "SELECT * FROM Gut WHERE produktID=" . $schokoID;
+        $result = $conn->query( $sql );
+        $schokolade = $result->fetch_row();
+        if( $counter >= $anzahlArray ) {
+            $lastrow = 'lastrow ';
+        }
+        else {
+            $lastrow = '';
         }
         
-        /* free result set */
-        mysqli_free_result($result);
+        echo '<div class="' . $lastrow . 'w-row warenkorbrow">';
+        echo '<div class="w-col w-col-4"><img class="warenkorbpic" sizes="(max-width: 767px) 54vw, (max-width: 991px) 128.421875px, 167.984375px" src="images/' . $schokolade[0] . '.jpg" srcset="images/' . $schokolade[0] . '.jpg 500w, images/' . $schokolade[0] . '.jpg 600w">
+        </div>';
+        echo '<div class="w-col w-col-5">';
+        echo '<h4 class="nameofproduct">' . $schokolade[3] . '</h4>';
+        echo '<div class="chocolatesize chocolatesizespecific">Art: ' . $schokolade[1] . '</div>';
+        echo '<div class="chocolatesize">Grösse: ' . $schokolade[2] . '</div>';
+        echo '</div>';
+        echo '<div class="w-col w-col-2">';
+        echo '<h4 class="menge">' . $anzahl . '<br>x</h4>';
+        echo '<h4 class="pricetag pricetagwarenkorb">' . $schokolade[4] . '€</h4>';
+        echo '</div>';
+        echo '<div class="w-col w-col-1">';
+        echo '</div>';
+        echo '</div>';
+        $counter++;
+        
+        $priceTotal += $anzahl * $schokolade[4];
     }
-  
-    ?>
+    }}
+    else{
+       echo '<p class="textback" data-ix="text1">ERROR!!!kauf.php</p>';
 
-</tbody>
-</table>
-</div>
+    }
     
+    ?>
+<div class="w-container">
+<h1>Gesamt: <?php echo $priceTotal; ?>€</h1>
+</div>
+<br>
+<br>
 </div>
     </div>
   </div>
   <div class="w-row">
     <div class="w-col w-col-2"></div>
     <div class="w-col w-col-2"></div>
-    <div class="w-col w-col-2"><a href="aufrechnungkauf.php">Auf Rechnung</a>
+    <div class="w-col w-col-2"><a href="aufrechnungkauf.php" vlink="#ff0000">Auf Rechnung</a>
     </div>
-    <div class="w-col w-col-2"><a href="kreditkartenkauf.php">Mit Kreditkarte</a>
+    <div class="w-col w-col-2"><a href="kreditkartenkauf.php" vlink="#ff0000">Mit Kreditkarte</a>
     </div>
     <div class="w-col w-col-2">
       <div class="w-embed">
@@ -114,11 +113,10 @@
 </form>
 
       </div>
-      <div class="paypaltext">Mit PayPal</div>
     </div>
     <div class="w-col w-col-2"></div>
   </div>
-  <p class="textback" data-ix="text1">Sollten Sie Änderungen vornehmen, so können Sie das im <a>Warenkorb</a> tun.</p>
+  <p class="textback" data-ix="text1">Sollten Sie Änderungen vornehmen, so können Sie das im <a href="warenkorb.php">Warenkorb</a> tun.</p>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js" type="text/javascript"></script>
   <script src="js/webflow.js" type="text/javascript"></script>
   <!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->

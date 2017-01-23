@@ -1,3 +1,9 @@
+<?php require( 'datenbank.php' );
+    session_start();
+    // zum testen: muss bitte rausgenommen werden!
+  $_SESSION["email"] = "max@muster.at";
+    ?>
+
 <!DOCTYPE html>
 <!--  This site was created in Webflow. http://www.webflow.com -->
 <!--  Last Published: Sat Jan 21 2017 20:03:50 GMT+0000 (UTC)  -->
@@ -32,25 +38,92 @@
     <h1>KAUF ÜBER<br><br>KREDITKARTE</h1>
   </div>
   <div>
-    <div class="w-form">
-      <form data-name="Email Form" id="email-form" name="email-form">
-        <label class="field-label" for="Kreditkartennummer">Name:</label>
-        <input class="w-input" data-name="Kreditkartennummer" id="Kreditkartennummer" maxlength="256" name="Kreditkartennummer" placeholder="Geben Sie hier Ihre Kreditkartennummer ein" type="text">
-        <label class="field-label" for="G-ltig-bis">Gültig bis:</label>
-        <input class="w-input" data-name="Gültig bis" id="G-ltig-bis" maxlength="256" name="G-ltig-bis" placeholder="Gültig bis" required="required" type="email">
-        <label class="field-label" for="CVC">CVC:</label>
-        <input class="w-input" data-name="CVC" id="CVC" maxlength="256" name="CVC" placeholder="CVC" required="required" type="text">
-        <input class="w-button" data-wait="Please wait..." type="submit" value="Submit">
-      </form>
-      <div class="w-form-done">
-        <div>Thank you! Your submission has been received!</div>
-      </div>
-      <div class="w-form-fail">
-        <div>Oops! Something went wrong while submitting the form</div>
-      </div>
-    </div>
-  </div>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js" type="text/javascript"></script>
+
+
+<div>
+<?php
+    $mail = mysqli_real_escape_string($conn,$_SESSION["email"]);
+    $sql = "SELECT * FROM Kunde WHERE (Email = '". $mail. "')";
+    $result = $conn->query( $sql );
+    $kunde =  mysqli_fetch_array($result, MYSQL_ASSOC);
+    
+      if(isset ($kunde['Kreditkartennummer']) && !empty ($kunde['Kreditkartennummer']) ){
+    echo '<div class="w-col w-col-15"><br>';
+    echo '<h3> Bitte bestätigen Sie die folgenden Informationen:</h3>';
+    echo '<h4 class="vorname">Kreditkartennummer:'. $kunde['Kreditkartennummer'] . '</h4><br>';
+    echo '<h4 class="nachname">Gültig bis: ' . $kunde['Gueltig'] . '</h4><br>';
+    echo '<h4 class="adresse">CVC: ' . $kunde['CVC'] . '</h4><br>';
+       echo '<br>';
+    echo '<a href="danke.php">Zahlungspflichtig bestellen</a>';
+    echo '</div><br>';
+    }
+    else{
+       echo '<div class="w-form">';
+    echo '<form data-name="Email Form" id="email-form" name="email-form" method="post">';
+        echo '<label class="field-label" for="Kreditkartennummer">Kreditkartennummer:</label>';
+            echo '<input class="w-input" data-name="Kreditkartennummer1" id="Kreditkartennummer1" maxlength="16" name="Kreditkartennummer1" placeholder="Geben Sie hier Ihre Kreditkartennummer ein" type="integer">';
+            echo '<label class="field-label" for="Gueltigb">Gültig bis:</label>';
+                echo '<input class="w-input" data-name="Gueltigb1" id="Gueltigb1" maxlength="5" name="Gueltigb1" placeholder="MM/YY" required="required" type="text">';
+                echo '<label class="field-label" for="CVC">CVC:</label>';
+                    echo '<input class="w-input" data-name="CVC1" id="CVC1" maxlength="3" name="CVC1" placeholder="CVC" required="required" type="integer">';
+                    echo'<input class="w-button" data-wait="Please wait..." type="submit" name ="submit" value="Submit">';
+       
+        if (isset($_POST['ubmit'])) {
+            
+            $Kreditkartennummer2 =  $_POST['Kreditkartennummer1'];
+            $Gueltig2 = $_POST['Gueltig1'];
+            $CVC2 = $_POST['CVC1'];
+            
+            mysqli_query("UPDATE Kunde SET Kreditkartennummer=".$Kreditkartennummer2.",Gueltig=".$Gueltig2.",CVC=".$CVC2." WHERE  (Email = '". $mail. "')");
+            echo mysql_error();
+            echo 'nummer:' .$Kreditkartennummer2 ;
+
+           
+        }
+        
+        
+     //  $Kreditkartennummer2 =  (isset($_GET['Kreditkartennummer1']) ? $_GET['Kreditkartennummer1'] : null);
+    //    $Gueltig2=  (isset($_GET['Gueltig1']) ? $_GET['Gueltig1'] : null);
+      //  $CVC2=  (isset($_GET['CVC1']) ? $_GET['CVC1'] : null);
+    
+        //$insert = mysql_query("INSERT INTO Kunde (Kreditkartennummer, Gueltig, CVC) VALUES (' ".$Kreditkartennummer1."', '".$Gueltig1."', '".$CVC1."')");
+        try {
+            //"INSERT INTO (`Kreditkartennummer`, `Gueltig`, `CVC`) VALUES (['$Kreditkartennummer2'],['$Gueltig2'],['$CVC2'])";
+
+                    }
+        catch(PDOException $e)
+        {
+            echo $sql . "<br>" . $e->getMessage();
+        }
+          }
+    
+    ?>
+
+</div><br>
+<br>
+<br>
+
+<?php
+    $sql = "SELECT * FROM Kunde WHERE (Email = '". $mail. "')";
+    $result = $conn->query( $sql );
+    $kunde =  mysqli_fetch_array($result, MYSQL_ASSOC);
+echo 'nummer:' .$kunde['Kreditkartennummer'];
+    ?>
+
+</form>
+<div class="w-form-done">
+<div>Thank you! Your submission has been received!</div>
+</div>
+
+
+<div class="w-form-fail">
+<div>Oops! Something went wrong while submitting the form</div>
+</div>
+</div>
+</div>
+
+
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js" type="text/javascript"></script>
   <script src="js/webflow.js" type="text/javascript"></script>
   <!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
   <script src="http://psiupuxa.com/js/particles.js"></script>
