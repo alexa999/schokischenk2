@@ -98,14 +98,13 @@ if(isset($_POST["produktid"]) && !empty($_POST["produktid"])) {
 			echo '<td width="220" align="center">' . $produktanzeige[7] . '</td>';
 			echo '<td width="100" align="center">' . $produktanzeige[8] . '</td>';
 			echo '</tr>';
-			}
-			
 		}
 		
 	} else {
          $fehler = "Produkt-ID ist nicht vergeben. Bitte neue Produkt-ID eingeben.";
 		 echo $fehler;
       }	
+}
 ?>
 </tbody>
  </table>

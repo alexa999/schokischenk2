@@ -127,5 +127,6 @@ if(isset($_POST["produktid"]) && !empty($_POST["produktid"])) {
 # Produkt löschen
 	if(isset($_POST['deletebutton'])){ 
 	$delete = "DELETE FROM Gut WHERE produktID = '$shopid'";
+	$ergebnis = mysqli_query($conn,$delete);
 	}
 ?>
