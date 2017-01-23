@@ -59,16 +59,23 @@ session_start();
       <div>Oops! Something went wrong while submitting the form</div>
     </div>
   </div>
-  <div class="adminproduktfeld" id="produktfeld"></div><a class="adminbutton3 w-button" href="#" id="deletebutton">löschen</a>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js" type="text/javascript"></script>
-  <script src="js/webflow.js" type="text/javascript"></script>
-  <!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
-  <script src="http://psiupuxa.com/js/particles.js"></script>
-  <script src="http://psiupuxa.com/js/app.js"></script>
-</body>
-</html>
-
-<?
+  <div id=table>
+<table style='border: 5px solid #DDDDDD' bgcolor="white" align="center">
+  <thead>
+    <tr>
+      <th align="center">ProduktID</th>
+      <th align="center">Schokoladenart</th>
+      <th align="center">Schokoladengroesse</th>
+	  <th align="center">Produktname</th>
+      <th align="center">Preis</th>
+      <th align="center">Hintergrundfarbe</th>
+	  <th align="center">Sticker</th>
+	  <th align="center">Text</th>
+	  <th align="center">Verfuegbarkeit</th>
+    </tr>
+  </thead>
+  <tbody>
+  <?
 # Verbindung zu Datenbank herstellen
 require( "datenbank.php" ); 
 
@@ -102,10 +109,23 @@ if(isset($_POST["produktid"]) && !empty($_POST["produktid"])) {
          $fehler = "Produkt-ID ist nicht vergeben. Bitte neue Produkt-ID eingeben.";
 		 echo $fehler;
       }
+}
+?>
+  </tbody>
+ </table>
+ </div>
+  <div class="adminproduktfeld" id="produktfeld"></div><a class="adminbutton3 w-button" href="#" id="deletebutton">löschen</a>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js" type="text/javascript"></script>
+  <script src="js/webflow.js" type="text/javascript"></script>
+  <!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
+  <script src="http://psiupuxa.com/js/particles.js"></script>
+  <script src="http://psiupuxa.com/js/app.js"></script>
+</body>
+</html>
 
-	# Produkt löschen
+<?
+# Produkt löschen
 	if(isset($_POST['deletebutton'])){ 
 	$delete = "DELETE FROM Gut WHERE produktID = '$shopid'";
 	}
-}
 ?>
