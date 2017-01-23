@@ -70,17 +70,19 @@
                     echo'<input class="w-button" data-wait="Please wait..." type="submit" name ="submit" value="Submit">';
        echo '</div>';
         
-        if($_SERVER['REQUEST_METHOD'] == "POST"){
-            $Kreditkartennummer1 =  $_REQUEST['Kreditkartennummer1'];
-            $Gueltigb1 = $_REQUEST['Gueltigb1'];
-            $CVC1 = $_REQUEST['CVC1'];
+        if (isset ($_POST["Kreditkartennummer1"]) && ($_POST["Gueltigb1"]) && ($_POST["CVC1"])){
+            $Kreditkartennummer1 =  $_POST['Kreditkartennummer1'];
+            $Gueltigb1 = $_POST['Gueltigb1'];
+            $CVC1 = $_POST['CVC1'];
             
             $sql="UPDATE Kunde SET Kreditkartennummer='".$Kreditkartennummer1."',Gueltig='".$Gueltigb1."',CVC='".$CVC1."' WHERE Email = '". $mail. "'";
             $retval = mysqli_query( $sql, $conn );
             echo mysql_error();
-            echo 'nummer1:' .$Kreditkartennummer2 ;
-       }
-        
+            echo 'nummer1:' .$Kreditkartennummer1 ;
+            }
+        else{
+            echo 'failure biatch';
+        }
         
      //  $Kreditkartennummer2 =  (isset($_GET['Kreditkartennummer1']) ? $_GET['Kreditkartennummer1'] : null);
     //    $Gueltig2=  (isset($_GET['Gueltig1']) ? $_GET['Gueltig1'] : null);
