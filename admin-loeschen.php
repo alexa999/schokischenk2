@@ -47,7 +47,7 @@ session_start();
   </div>
   <h1>produkt löschen</h1>
   <div class="w-form">
-    <form data-name="Email Form" id="email-form" name="email-form">
+    <form data-name="Email Form" id="email-form" name="email-form" method = "POST">
       <label class="admintext" for="produktid">Produkt-ID</label>
       <input class="adminfeld w-input" data-name="Name" id="produktid" maxlength="256" name="name" placeholder="Enter your name" type="text">
       <input class="adminbutton3 w-button" data-wait="Please wait..." id="suchenbutton" type="submit" value="Suchen">
