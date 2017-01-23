@@ -47,7 +47,7 @@ session_start();
   </div>
   <h1>Neues produkt hinzufügen</h1>
   <div class="w-form">
-    <form class="adminformcenter" data-name="Form" id="form" method="post" name="form">
+    <form class="adminformcenter" data-name="Form" id="form" method="post" name="form" action="admin-neuesprodukt.php">
       <label class="admintext" for="produktid"><span>Produkt-ID:</span>
       </label>
       <input class="adminfeld w-input" data-name="Name" id="produktid" maxlength="256" name="name" placeholder="Füge die Produkt-ID ein" type="text">

@@ -47,11 +47,73 @@ session_start();
   </div>
   <h1>Bestehendes produkt<br><br> aktualisieren</h1>
   <div class="w-form">
-    <form data-name="Email Form" id="email-form" name="email-form">
+    <form data-name="Email Form" id="email-form" name="email-form" action="admin-update.php">
       <label class="admintext" for="produktid">Produkt-ID:</label>
-      <input class="adminfeld w-input" data-name="Name" id="produktid" maxlength="256" name="name" placeholder="Füge die Produkt-ID ein" type="text">
-      <input class="adminbutton3 w-button" data-wait="Please wait..." id="anzeigenButton" type="submit" value="Anzeigen">
+      <input class="adminfeld w-input" data-name="Name" id="produktid" maxlength="256" name="produktid" placeholder="Füge die Produkt-ID ein" type="text">
+      <input class="adminbutton3 w-button" data-wait="Please wait..." id="anzeigenButton" type="submit" value="Anzeigen" name="anzeigenButton">
     </form>
+	<div id=table>
+<table style='border: 5px solid #DDDDDD' bgcolor="white" align="center">
+  <thead>
+    <tr>
+      <th align="center">ProduktID</th>
+      <th align="center">Schokoladenart</th>
+      <th align="center">Schokoladengroesse</th>
+	  <th align="center">Produktname</th>
+      <th align="center">Preis</th>
+      <th align="center">Hintergrundfarbe</th>
+	  <th align="center">Sticker</th>
+	  <th align="center">Text</th>
+	  <th align="center">Verfuegbarkeit</th>
+    </tr>
+  </thead>
+  <tbody>
+ <?
+# Verbindung zu Datenbank herstellen
+require( "datenbank.php" ); 
+
+## Id von Seite holen
+
+if(isset($_POST["produktid"]) && !empty($_POST["produktid"])) {
+	$shopid = $_POST["produktid"];
+ 
+	#IDs vergleichen
+	if ($sql = "SELECT * FROM Gut WHERE produktID = '".$shopid."'") {
+		$ergebnis = mysqli_query($conn,$sql);
+		$ergebnisreihen = mysqli_num_rows($ergebnis);
+
+		if($ergebnisreihen <= 0 ) {
+			echo "Ich habe keine Produkte gefunden";
+		}else {
+			$produkt = $ergebnis -> fetch_all();
+			$counter = 0;
+			
+			foreach($produkt as $produktanzeige) {
+			echo "<tr>";
+			echo '<td width="80" align="center">' . $produktanzeige[0] . '</td>';
+			echo '<td width="150" align="center">' . $produktanzeige[1] . '</td>';
+			echo '<td width="150" align="center">' . $produktanzeige[2] . '</td>';
+			echo '<td width="300" align="center">' . $produktanzeige[3] . '</td>';
+			echo '<td width="80" align="center">' . $produktanzeige[4] . '</td>';
+			echo '<td width="180" align="center">' . $produktanzeige[5] . '</td>';
+			echo '<td width="120" align="center">' . $produktanzeige[6] . '</td>';
+			echo '<td width="220" align="center">' . $produktanzeige[7] . '</td>';
+			echo '<td width="100" align="center">' . $produktanzeige[8] . '</td>';
+			echo '</tr>';
+			}
+			$counter++;
+		}
+		
+	} else {
+         $fehler = "Produkt-ID ist nicht vergeben. Bitte neue Produkt-ID eingeben.";
+		 echo $fehler;
+      }	
+}
+?>
+</tbody>
+ </table>
+ </div>
+  
     <div class="w-form-done">
       <div>Thank you! Your submission has been received!</div>
     </div>
@@ -61,9 +123,9 @@ session_start();
   </div>
   <div class="adminproduktfeld" id="ProduktFeld"></div>
   <div class="w-form">
-    <form data-name="Email Form 2" id="email-form-2" method="post" name="email-form-2">
+    <form data-name="Email Form 2" id="email-form-2" method="post" name="email-form-2" action="admin-update.php">
       <label class="admintext" for="spalte">Wähle eine Spalte aus:</label>
-      <select class="adminfeld w-select" id="spalte" name="field">
+      <select class="adminfeld w-select" id="spalte" name="spalte">
         <option value="">Select one...</option>
         <option value="Produkt-ID">Produkt-ID</option>
         <option value="Produktname">Produktname</option>
@@ -76,8 +138,8 @@ session_start();
         <option value="verpackungText">Text</option>
       </select>
       <label class="admintext" for="aenderungen">Gebe Änderungen ein:</label>
-      <input class="adminfeld w-input" id="aenderungen" maxlength="256" name="field-2" placeholder="Gebe Änderungen ein" required="required" type="text">
-      <input class="adminbutton3 w-button" data-wait="Please wait..." id="aktualisierenButton" type="submit" value="Aktualisieren">
+      <input class="adminfeld w-input" id="aenderungen" maxlength="256" name="aenderungen" placeholder="Gebe Änderungen ein" required="required" type="text">
+      <input class="adminbutton3 w-button" data-wait="Please wait..." id="aktualisierenButton" type="submit" value="Aktualisieren" name="aktualisierenButton">
     </form>
     <div class="w-form-done">
       <div>Thank you! Your submission has been received!</div>
@@ -95,37 +157,20 @@ session_start();
 </html>
 
 <?
-# Verbindung zu Datenbank herstellen
-require( "datenbank.php" ); 
-
-## Id von Seite holen
-
-if(isset($_POST["name"])) {
-	$shopid = $_POST["name"];
-} 
-
-#IDs vergleichen
-if ($sql = "SELECT produktID FROM Gut WHERE produktID = '$shopid'") {
-	$ergebnis = mysqli_query($conn,$sql);
-	echo $ergebnis;
-} else {
-         $fehler = "Produkt-ID ist nicht vergeben. Bitte neue Produkt-ID eingeben.";
-		 echo $fehler;
-      }
-
 ## Spalte von Seite holen
-if(isset($_POST["field"])) {
-	$shopspalte = $_POST["field"];
+if(isset($_POST["spalte"])) {
+	$shopspalte = $_POST["spalte"];
 }
 
 ## Änderung von Seite holen
-if(isset($_POST["field-2"])) {
-	$shopaender = $_POST["field-2"];
+if(isset($_POST["aenderungen"])) {
+	$shopaender = $_POST["aenderungen"];
 }
 	  
 ## Wenn auf Button geklickt wird, Produkt updaten	
 if(isset($_POST['aktualisierenButton'])){ 
-	$update = "UPDATE Gut SET '$shopspalte' = '$shopaender' WHERE produktID = '$shopid'";
+	#$update = "UPDATE Gut SET '$shopspalte' = '$shopaender' WHERE produktID = '$shopid'";
+	$update = "UPDATE Gut SET '".$shopspalte."' = '".$shopaender."' WHERE produktID = '".$shopid."'";
 	$eintragen = mysqli_query($conn, $update);
 }
 ?>
